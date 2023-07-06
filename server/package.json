@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "cake project server",
+  "main": "server.js",
+
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "mongoose": "^7.0.1",
+    "nodemon": "^2.0.21",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "build": "npm i"
+  },
+
+
+  "author": "Mehmet Altan",
+  "license": "ISC"
+}
