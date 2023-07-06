@@ -1,8 +1,8 @@
-import React from 'react'
+import { PageWrapper } from "../layouts/Wrappers";
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <PageWrapper>Home</PageWrapper>
   )
 }
 

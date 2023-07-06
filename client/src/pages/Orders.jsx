@@ -1,9 +1,7 @@
-import React from 'react'
+import { PageWrapper } from "../layouts/Wrappers";
 
 const Orders = () => {
-  return (
-    <div>Orders</div>
-  )
-}
+  return <PageWrapper>Orders</PageWrapper>;
+};
 
-export default Orders
+export default Orders;

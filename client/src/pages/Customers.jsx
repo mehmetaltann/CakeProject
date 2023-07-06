@@ -1,8 +1,8 @@
-import React from 'react'
+import { PageWrapper } from "../layouts/Wrappers";
 
 const Customers = () => {
   return (
-    <div>Customers</div>
+    <PageWrapper>Customers</PageWrapper>
   )
 }
 

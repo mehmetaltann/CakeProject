@@ -1,5 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import ArchitectureIcon from "@mui/icons-material/Architecture";
+import CakeIcon from '@mui/icons-material/Cake';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -28,14 +28,14 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="secondary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <ArchitectureIcon
+          <CakeIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="a"
             href="/"
@@ -99,7 +99,7 @@ const NavBar = () => {
             </Menu>
           </Box>
 
-          <ArchitectureIcon
+          <CakeIcon
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
           />
           <Typography
@@ -118,7 +118,7 @@ const NavBar = () => {
               textDecoration: "none",
             }}
           >
-            Altan
+            Harf Pasta
           </Typography>
 
           <Box
