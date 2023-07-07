@@ -1,10 +1,19 @@
 import { dateFormat } from "../../../utils/help-functions";
 
-export const dateColumn = (fieldName, headerName, width = 100, rest) => {
+export const dateColumn = (
+  fieldName,
+  headerName,
+  minWidth = 125,
+  width = 150,
+  maxWidth = 200,
+  rest
+) => {
   return {
     field: fieldName,
     headerName: headerName,
+    minWidth: minWidth,
     width: width,
+    maxWidth: maxWidth,
     headerClassName: "header",
     type: "date",
     headerAlign: "left",
@@ -14,11 +23,20 @@ export const dateColumn = (fieldName, headerName, width = 100, rest) => {
   };
 };
 
-export const stringColumn = (fieldName, headerName, width, rest) => {
+export const stringColumn = (
+  fieldName,
+  headerName,
+  minWidth,
+  width,
+  maxWidth,
+  rest
+) => {
   return {
     field: fieldName,
     headerName: headerName,
-    width: width,
+    minWidth,
+    width,
+    maxWidth,
     headerClassName: "header",
     headerAlign: "left",
     align: "left",
@@ -26,11 +44,20 @@ export const stringColumn = (fieldName, headerName, width, rest) => {
   };
 };
 
-export const priceColumn = (fieldName, headerName, width, rest) => {
+export const priceColumn = (
+  fieldName,
+  headerName,
+  minWidth,
+  width,
+  maxWidth,
+  rest
+) => {
   return {
     field: fieldName,
     headerName: headerName,
-    width: width,
+    minWidth,
+    width,
+    maxWidth,
     headerClassName: "header",
     headerAlign: "left",
     align: "left",
@@ -40,11 +67,20 @@ export const priceColumn = (fieldName, headerName, width, rest) => {
   };
 };
 
-export const numberColumn = (fieldName, headerName, width, rest) => {
+export const numberColumn = (
+  fieldName,
+  headerName,
+  minWidth,
+  width,
+  maxWidth,
+  rest
+) => {
   return {
     field: fieldName,
     headerName: headerName,
-    width: width,
+    minWidth,
+    width,
+    maxWidth,
     headerClassName: "header",
     headerAlign: "left",
     align: "left",

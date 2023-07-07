@@ -1,5 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import CakeIcon from '@mui/icons-material/Cake';
+import CakeIcon from "@mui/icons-material/Cake";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,6 +19,7 @@ const pages = [
   { title: "Anasayfa", link: "" },
   { title: "Siparişler", link: "siparisler" },
   { title: "Müşteriler", link: "musteriler" },
+  { title: "Tarifler", link: "tarifler" },
   { title: "Malzemeler", link: "malzemeler" },
 ];
 
@@ -31,9 +32,7 @@ const NavBar = () => {
     <AppBar position="static" color="secondary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CakeIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <CakeIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -99,9 +98,7 @@ const NavBar = () => {
             </Menu>
           </Box>
 
-          <CakeIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <CakeIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap

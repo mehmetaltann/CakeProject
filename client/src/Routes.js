@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import Customers from "./pages/Customers";
 import Orders from "./pages/Orders";
 import Materials from "./pages/Materials";
+import SemiProducts from "./pages/SemiProducts";
 import NavBar from "./layouts/NavBar";
 import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
@@ -29,6 +30,10 @@ const routes = [
   {
     path: "/siparisler",
     component: Orders,
+  },
+  {
+    path: "/tarifler",
+    component: SemiProducts,
   },
 ];
 

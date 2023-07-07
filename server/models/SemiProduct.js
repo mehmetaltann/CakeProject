@@ -13,7 +13,17 @@ const SemiProductSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    materials: [{ type: Schema.Types.ObjectId, ref: "material" }],
+    materials: [
+      {
+        mtObj: { type: Schema.Types.ObjectId, ref: "material" },
+        mtNumber: {
+          type: Number,
+          required: true,
+          trim: true,
+          maxLength: 20,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

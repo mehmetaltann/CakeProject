@@ -6,4 +6,9 @@ export const GlobalTheme = createTheme({
       main: "#112D4E",
     },
   },
+  typography: {
+    button: {
+      textTransform: "none",
+    },
+  },
 });

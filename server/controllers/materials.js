@@ -6,6 +6,7 @@ const {
   dbFindByIdAndDelete,
   dbSave,
   dbFindOne,
+  dbFindByIdAndUpdate,
 } = require("./dbQueries.js");
 
 exports.materialQuery = async (req, res) => {
@@ -42,29 +43,30 @@ exports.materialAdd = async (req, res) => {
   }
 };
 
-exports.materialDelete = async (req, res) => {
-  const matRes = await dbFindOne(MaterialSchema, {
-    _id: req.params.id,
-  });
-  /*
-  const invRes = await dbFindOne(ProductSchema, {
-    portfolio: portfolioRes.title,
-  });
-  const isUse = invRes ? true : false;
-  */
-  const isUse = false;
-  if (!isUse) {
-    try {
-      await dbFindByIdAndDelete(InvPortfolioSchema, req.params.id);
-      res.status(200).json({ message: "Malzeme Silindi" });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Malzeme Silinemedi, Server Bağlantı Hatası" });
-    }
-  } else {
+exports.materialUpdate = async (req, res) => {
+  updateData = {
+    name: req.body.name,
+    price: req.body.price,
+    brand: req.body.brand,
+    date: req.body.date,
+  };
+  try {
+    await dbFindByIdAndUpdate(MaterialSchema, req.params.id, updateData);
+    res.status(200).json({ message: "Malzeme Güncellendi" });
+  } catch (error) {
     res
-      .status(200)
-      .json({ message: "Bu Malzeme Silinemez, Yatırımları Bulunuyor." });
+      .status(500)
+      .json({ message: "Malzeme Güncellenemedi, Server Bağlantı Hatası" });
+  }
+};
+
+exports.materialDelete = async (req, res) => {
+  try {
+    await dbFindByIdAndDelete(MaterialSchema, req.params.id);
+    res.status(200).json({ message: "Malzeme Silindi" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Malzeme Silinemedi, Server Bağlantı Hatası" });
   }
 };

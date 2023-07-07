@@ -19,6 +19,17 @@ export const materialApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Materials"],
     }),
+    updateMaterial: builder.mutation({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `malzeme-guncelle/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Materials"],
+    }),
     deleteMaterial: builder.mutation({
       query: (id) => ({
         url: `malzeme-sil/${id}`,
@@ -33,4 +44,5 @@ export const {
   useGetMaterialsQuery,
   useAddMaterialMutation,
   useDeleteMaterialMutation,
+  useUpdateMaterialMutation,
 } = materialApi;

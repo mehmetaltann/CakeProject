@@ -43,6 +43,15 @@ exports.dbFindAggregate = async (transectionObj, query) => {
   }
 };
 
+exports.dbFindById = async (transectionObj, id) => {
+  try {
+    const res = await transectionObj.findById(id);
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 exports.dbFindByIdAndDelete = async (transectionObj, id) => {
   try {
     const res = await transectionObj.findByIdAndDelete(id);
