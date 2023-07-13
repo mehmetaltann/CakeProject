@@ -1,22 +1,25 @@
 import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../UI/form/FormTextField";
+import FormSelect from "../UI/form/FormSelect";
 import * as Yup from "yup";
-import { Stack, Button } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Stack, Button, MenuItem } from "@mui/material";
+import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 
-const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
+const PForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   const dispatch = useDispatch();
 
   const validateSchema = Yup.object().shape({
     name: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
+    size: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
   });
 
   async function submitHandler(values) {
     const newRecord = {
       name: values.name,
       description: values.description,
+      size: values.size,
       id: objId,
     };
     try {
@@ -53,6 +56,14 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
               label="İsim"
               size="small"
             />
+            <Field name="size" component={FormSelect} label="Boyut">
+              <MenuItem value="4-8 Kişilik">4-8 Kişilik</MenuItem>
+              <MenuItem value="8-12 Kişilik">8-12 Kişilik</MenuItem>
+              <MenuItem value="12-16 Kişilik">12-16 Kişilik</MenuItem>
+              <MenuItem value="16-20 Kişilik">16-20 Kişilik</MenuItem>
+              <MenuItem value="20-25 Kişilik">20-25 Kişilik</MenuItem>
+              <MenuItem value="25-30 Kişilik">25-30 Kişilik</MenuItem>
+            </Field>
             <FormTextField
               sx={{ width: "100%" }}
               name="description"
@@ -75,4 +86,4 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   );
 };
 
-export default SpForm;
+export default PForm;

@@ -61,23 +61,32 @@ exports.materialUpdate = async (req, res) => {
 };
 
 exports.materialDelete = async (req, res) => {
-  const mtRes = await dbFindOne(SemiProductSchema, {
+  const spRes = await dbFindOne(SemiProductSchema, {
     "materials.mtId": req.params.id,
   });
 
-  if (!mtRes) {
-    try {
-      await dbFindByIdAndDelete(MaterialSchema, req.params.id);
-      res.status(200).json({ message: "Malzeme Silindi" });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Malzeme Silinemedi, Server Bağlantı Hatası" });
+  const pRes = await dbFindOne(ProductSchema, {
+    "materials.mtId": req.params.id,
+  });
+
+  if (!spRes) {
+    if (!pRes) {
+      try {
+        await dbFindByIdAndDelete(MaterialSchema, req.params.id);
+        res.status(200).json({ message: "Malzeme Silindi" });
+      } catch (error) {
+        res
+          .status(500)
+          .json({ message: "Malzeme Silinemedi, Server Bağlantı Hatası" });
+      }
+    } else {
+      res.status(200).json({
+        message: "Malzeme Silinemedi, Bu malzeme bir üründe kullanılmaktadır.",
+      });
     }
   } else {
     res.status(200).json({
-      message:
-        "Malzeme Silinemedi, Bu malzeme bir ürün veya bir tarifte kullanılmaktadır.",
+      message: "Malzeme Silinemedi, Bu malzeme bir tarifte kullanılmaktadır.",
     });
   }
 };

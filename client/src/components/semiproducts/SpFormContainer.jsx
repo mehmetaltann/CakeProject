@@ -3,7 +3,6 @@ import SpForm from "./SpForm";
 import { useState } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
 import { useAddSemiProductMutation } from "../../redux/apis/semiProductApi";
-
 import React from "react";
 
 const SpFormContainer = () => {
@@ -24,6 +23,7 @@ const SpFormContainer = () => {
           height={{ md: "25vh" }}
           modalOpen={openSpAddModal}
           setModalOpen={setOpenSpAddModal}
+          size="normal"
         >
           <SpForm
             setOpenModel={setOpenSpAddModal}

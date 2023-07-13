@@ -1,14 +1,10 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
 import ModalButton from "../UI/ModalButton";
 import ModalIconButton from "../UI/ModalIconButton";
 import SpForm from "./SpForm";
-import FormTextField from "../UI/form/FormTextField";
-import FormSelect from "../UI/form/FormSelect";
-import * as Yup from "yup";
-import { Form, Formik, Field } from "formik";
+import DataForm from "../UI/DataForm";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -25,17 +21,14 @@ import {
   Box,
   TableHead,
   TableRow,
-  MenuItem,
   TableCell,
-  Button,
   Collapse,
-  Stack,
 } from "@mui/material";
 
 const SpTableRow = ({ data, allMaterials }) => {
   const { spId, name, description, materials } = data;
   const [open, setOpen] = useState(false);
-  const [openAddMyToSpModal, setOpenAddMyToSpModal] = useState(false);
+  const [openAddMtToSpModal, setOpenAddMtToSpModal] = useState(false);
   const [openEditSpModal, setOpenEditSpModal] = useState(false);
   const [updateSemiProduct] = useUpdateSemiProductMutation();
   const [deleteSemiProduct] = useDeleteSemiProductMutation();
@@ -49,44 +42,12 @@ const SpTableRow = ({ data, allMaterials }) => {
     .reduce((n, { mtCost }) => n + mtCost, 0)
     .toFixed(2);
 
-  const validateSchema = Yup.object().shape({
-    mtNumber: Yup.number()
-      .required("Gerekli")
-      .moreThan(0, "Sıfırdan Büyük Olmalıdır"),
-  });
-
   const initialSelectValueId = allMaterials?.find((item) => item.name === "Un");
-
-  async function submitHandler(values) {
-    const newRecord = {
-      spId: spId,
-      mtId: values.mtName,
-      mtNumber: values.mtNumber,
-    };
-    try {
-      const res = await addMaterialToSemiProduct(newRecord).unwrap();
-      setOpenAddMyToSpModal(false);
-      dispatch(
-        setSnackbar({
-          children: res.message,
-          severity: "success",
-        })
-      );
-    } catch (error) {
-      setOpenAddMyToSpModal(false);
-      dispatch(
-        setSnackbar({
-          children: error,
-          severity: "error",
-        })
-      );
-    }
-  }
 
   return (
     <Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }} colSpan={4}>
-        <TableCell align="left">
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell align="left" width="5%">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -145,73 +106,25 @@ const SpTableRow = ({ data, allMaterials }) => {
           </ModalIconButton>
         </TableCell>
       </TableRow>
+
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Table size="small" aria-label="materials" sx={{ minWidth: 650 }}>
+              <Table size="small" aria-label="materials">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">İsim</TableCell>
+                    <TableCell align="left" width="1%">
+                      No
+                    </TableCell>
+                    <TableCell align="left" width="18%">
+                      İsim
+                    </TableCell>
                     <TableCell align="left">Miktar</TableCell>
                     <TableCell align="left">Birim</TableCell>
                     <TableCell align="left">Maliyet</TableCell>
-                    <TableCell align="left">Malzeme Sil</TableCell>
-                    <TableCell align="right">
-                      <ModalButton
-                        height={{ md: "25vh" }}
-                        color="primary"
-                        endIconLogo="add"
-                        buttonTitle="Yeni Malzeme Ekle"
-                        minW="20vh"
-                        title="Yeni Tarif Malzemesi"
-                        modalOpen={openAddMyToSpModal}
-                        setModalOpen={setOpenAddMyToSpModal}
-                      >
-                        <Formik
-                          initialValues={{
-                            mtName: initialSelectValueId.id,
-                            mtNumber: 0,
-                          }}
-                          onSubmit={submitHandler}
-                          validationSchema={validateSchema}
-                        >
-                          {({ values }) => (
-                            <Form>
-                              <Stack spacing={2} sx={{ pl: 1 }}>
-                                <Field
-                                  name="mtName"
-                                  component={FormSelect}
-                                  label="Malzeme"
-                                  defaultValue="64a7c881616d29bc3389a65a"
-                                >
-                                  {allMaterials.map((item) => (
-                                    <MenuItem value={item.id} key={item.id}>
-                                      {item.name}
-                                    </MenuItem>
-                                  ))}
-                                </Field>
-                                <FormTextField
-                                  sx={{ width: "100%" }}
-                                  name="mtNumber"
-                                  label="Miktar"
-                                  type="number"
-                                  size="small"
-                                />
-                                <Button
-                                  type="submit"
-                                  sx={{ width: "100%" }}
-                                  variant="contained"
-                                  color="secondary"
-                                  endIcon={<SendIcon />}
-                                >
-                                  Ekle
-                                </Button>
-                              </Stack>
-                            </Form>
-                          )}
-                        </Formik>
-                      </ModalButton>
+                    <TableCell align="left" width="15%">
+                      Malzeme Sil
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -224,15 +137,19 @@ const SpTableRow = ({ data, allMaterials }) => {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" width="1%">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell component="th" scope="row" width="18%">
                           {mtName}
                         </TableCell>
-                        <TableCell>{mtAmount}</TableCell>
-                        <TableCell>{mtUnit}</TableCell>
+                        <TableCell width="3%">{mtAmount}</TableCell>
+                        <TableCell width="3%">{mtUnit}</TableCell>
                         <TableCell
                           sx={{ color: "secondary.main", fontWeight: 500 }}
+                          width="6%"
                         >{`${mtCost.toFixed(2)} TL`}</TableCell>
-                        <TableCell>
+                        <TableCell align="left" width="5%">
                           <IconButton
                             size="small"
                             color="secondary"
@@ -264,6 +181,32 @@ const SpTableRow = ({ data, allMaterials }) => {
                       </TableRow>
                     )
                   )}
+                  <TableRow>
+                    <TableCell align="right" colSpan={6}>
+                      <ModalButton
+                        height={{ md: "25vh" }}
+                        color="primary"
+                        endIconLogo="add"
+                        buttonTitle="Yeni Malzeme Ekle"
+                        minW="20vh"
+                        title="Yeni Tarif Malzemesi"
+                        modalOpen={openAddMtToSpModal}
+                        setModalOpen={setOpenAddMtToSpModal}
+                      >
+                        <DataForm
+                          setOpenModel={setOpenAddMtToSpModal}
+                          initialValues={{
+                            title: initialSelectValueId.id,
+                            amount: 0,
+                          }}
+                          submitFunction={addMaterialToSemiProduct}
+                          selectOptions={allMaterials}
+                          ObjId={spId}
+                          defV="64a7c881616d29bc3389a65a"
+                        />
+                      </ModalButton>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>

@@ -10,7 +10,7 @@ import { Form, Formik, Field } from "formik";
 import { materialDateInput } from "../../utils/help-functions";
 import { useDispatch } from "react-redux";
 import { useAddMaterialMutation } from "../../redux/apis/materialApi";
-import { setSnackbar} from "../../redux/slices/generalSlice";
+import { setSnackbar } from "../../redux/slices/generalSlice";
 
 const MaterialForm = () => {
   const [openMaterialAddModal, setOpenMaterialAddModal] = useState(false);
@@ -72,12 +72,13 @@ const MaterialForm = () => {
           title="Yeni Malzeme"
           modalOpen={openMaterialAddModal}
           setModalOpen={setOpenMaterialAddModal}
+          size="normal"
         >
           <Formik
             initialValues={{
               name: "",
               type: "Gıda",
-              unit: "gr",
+              unit: "Gram",
               amount: 0,
               price: 0,
               description: "",

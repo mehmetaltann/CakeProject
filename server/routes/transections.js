@@ -28,4 +28,24 @@ router.delete("/tarif-sil/:id", semiProductDelete);
 router.put("/tarif-malzeme-ekle", addMaterialToSemiProduct);
 router.put("/tarif-malzeme-sil", deleteMaterialToSemiProduct);
 
+//Products
+const {
+  productAdd,
+  productQuery,
+  productUpdate,
+  productDelete,
+  addMaterialToProduct,
+  deleteMaterialToProduct,
+  addSemiProductToProduct,
+  deleteSemiProductToProduct,
+} = require("../controllers/products");
+router.get("/urun-sorgula", productQuery);
+router.post("/urun-ekle", productAdd);
+router.put("/urun-guncelle/:id", productUpdate);
+router.delete("/urun-sil/:id", productDelete);
+router.put("/urun-malzeme-ekle", addMaterialToProduct);
+router.put("/urun-malzeme-sil", deleteMaterialToProduct);
+router.put("/urun-tarif-ekle", addSemiProductToProduct);
+router.put("/urun-tarif-sil", deleteSemiProductToProduct);
+
 module.exports = router;

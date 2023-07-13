@@ -15,6 +15,7 @@ const ModalButton = ({
   variant = "outlined",
   modalOpen,
   setModalOpen,
+  size = "small",
 }) => {
   const modalStyle = {
     position: "absolute",
@@ -34,6 +35,7 @@ const ModalButton = ({
     <Fragment>
       <Button
         color={color}
+        size={size}
         variant={variant}
         endIcon={endIconLogo === "send" ? <SendIcon /> : <PlaylistAddIcon />}
         sx={{ minWidth: minW, maxWidth: maxW }}

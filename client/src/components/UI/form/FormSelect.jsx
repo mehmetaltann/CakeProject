@@ -10,7 +10,7 @@ const FormSelect = ({ children, form, field, ...rest }) => {
       type="text"
       sx={{ width: "100%" }}
       name={name}
-      value={value}
+      value={value ?? ""}
       onChange={(e) => {
         setFieldValue(name, e.target.value);
       }}

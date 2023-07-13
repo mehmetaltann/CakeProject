@@ -18,8 +18,28 @@ const ProductSchema = new mongoose.Schema(
       trim: true,
       maxLength: 40,
     },
-    materials: [{ type: Schema.Types.ObjectId, ref: "material" }],
-    semiproducts: [{ type: Schema.Types.ObjectId, ref: "semiproduct" }],
+    materials: [
+      {
+        mtId: { type: String, required: true, trim: true, maxLength: 60 },
+        mtNumber: {
+          type: Number,
+          required: true,
+          trim: true,
+          maxLength: 20,
+        },
+      },
+    ],
+    semiproducts: [
+      {
+        spId: { type: String, required: true, trim: true, maxLength: 60 },
+        spNumber: {
+          type: Number,
+          required: true,
+          trim: true,
+          maxLength: 20,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

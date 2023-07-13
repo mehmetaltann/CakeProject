@@ -1,24 +1,35 @@
 import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../UI/form/FormTextField";
+import FormSelect from "../UI/form/FormSelect";
 import * as Yup from "yup";
-import { Stack, Button } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Stack, Button, MenuItem } from "@mui/material";
+import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 
-const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
+const DataForm = ({
+  setOpenModel,
+  initialValues,
+  submitFunction,
+  selectOptions,
+  ObjId,
+  defV,
+}) => {
   const dispatch = useDispatch();
 
   const validateSchema = Yup.object().shape({
-    name: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
+    amount: Yup.number()
+      .required("Gerekli")
+      .moreThan(0, "Sıfırdan Büyük Olmalıdır"),
   });
 
   async function submitHandler(values) {
     const newRecord = {
-      name: values.name,
-      description: values.description,
-      id: objId,
+      objId: ObjId,
+      id: values.title,
+      number: values.amount,
     };
+
     try {
       const res = await submitFunction(newRecord).unwrap();
       setOpenModel(false);
@@ -47,16 +58,23 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
       {({ values }) => (
         <Form>
           <Stack spacing={2} sx={{ pl: 1 }}>
-            <FormTextField
-              sx={{ width: "100%" }}
-              name="name"
+            <Field
+              name="title"
+              component={FormSelect}
               label="İsim"
-              size="small"
-            />
+              defaultValue={defV}
+            >
+              {selectOptions.map((item, index) => (
+                <MenuItem value={item.id} key={index}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Field>
             <FormTextField
               sx={{ width: "100%" }}
-              name="description"
-              label="Not"
+              name="amount"
+              label="Miktar"
+              type="number"
               size="small"
             />
             <Button
@@ -75,4 +93,4 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   );
 };
 
-export default SpForm;
+export default DataForm;
