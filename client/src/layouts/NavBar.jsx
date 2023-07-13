@@ -19,6 +19,7 @@ const pages = [
   { title: "Anasayfa", link: "" },
   { title: "Siparişler", link: "siparisler" },
   { title: "Müşteriler", link: "musteriler" },
+  { title: "Ürünler", link: "urunler" },
   { title: "Tarifler", link: "tarifler" },
   { title: "Malzemeler", link: "malzemeler" },
 ];

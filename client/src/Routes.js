@@ -1,5 +1,6 @@
 import Home from "./pages/Home";
 import Customers from "./pages/Customers";
+import Products from "./pages/Products";
 import Orders from "./pages/Orders";
 import Materials from "./pages/Materials";
 import SemiProducts from "./pages/SemiProducts";
@@ -24,16 +25,20 @@ const routes = [
     component: Customers,
   },
   {
-    path: "/malzemeler",
-    component: Materials,
-  },
-  {
     path: "/siparisler",
     component: Orders,
   },
   {
+    path: "/urunler",
+    component: Products,
+  },
+  {
     path: "/tarifler",
     component: SemiProducts,
+  },
+  {
+    path: "/malzemeler",
+    component: Materials,
   },
 ];
 
