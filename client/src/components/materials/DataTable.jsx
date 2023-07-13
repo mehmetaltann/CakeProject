@@ -117,7 +117,7 @@ const DataTable = () => {
           <IconButton
             key={index}
             size="small"
-            color="error"
+            color="secondary"
             onClick={async () => {
               try {
                 const res = await deleteMaterial(params.row.id).unwrap();
@@ -150,6 +150,9 @@ const DataTable = () => {
       rows={materials}
       processRowUpdate={processRowUpdate}
       onProcessRowUpdateError={handleProcessRowUpdateError}
+      disableColumnFilter
+      disableDensitySelector
+      disableExport
     />
   );
 };

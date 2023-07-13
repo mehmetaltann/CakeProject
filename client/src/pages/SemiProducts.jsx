@@ -1,5 +1,5 @@
 import SpDataTable from "../components/semiproducts/SpDataTable";
-import SpForm from "../components/semiproducts/SpForm";
+import SpFormContainer from "../components/semiproducts/SpFormContainer"
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
 
@@ -7,7 +7,7 @@ const SemiProducts = () => {
   return (
     <PageWrapper maxWidth="lg">
       <Stack spacing={2}>
-        <SpForm />
+        <SpFormContainer />
         <SpDataTable />
       </Stack>
     </PageWrapper>

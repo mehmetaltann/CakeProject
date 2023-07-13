@@ -1,17 +1,12 @@
-import SendIcon from "@mui/icons-material/Send";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import { Button, Modal, Box, Typography, Divider } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { Modal, Box, Typography, Divider, IconButton } from "@mui/material";
 import { Fragment } from "react";
 
-const ModalButton = ({
+const ModalIconButton = ({
   children,
-  minW = "25vh",
-  maxW = "35vh",
   title,
   height = { md: "70vh", xs: "80vh" },
   color = "secondary",
-  endIconLogo = "send",
-  buttonTitle = "EKLE",
   variant = "outlined",
   modalOpen,
   setModalOpen,
@@ -32,15 +27,14 @@ const ModalButton = ({
 
   return (
     <Fragment>
-      <Button
-        color={color}
+      <IconButton
+        size="small"
         variant={variant}
-        endIcon={endIconLogo === "send" ? <SendIcon /> : <PlaylistAddIcon />}
-        sx={{ minWidth: minW, maxWidth: maxW }}
+        color={color}
         onClick={() => setModalOpen(true)}
       >
-        {buttonTitle}
-      </Button>
+        <EditIcon />
+      </IconButton>
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -57,4 +51,4 @@ const ModalButton = ({
   );
 };
 
-export default ModalButton;
+export default ModalIconButton;

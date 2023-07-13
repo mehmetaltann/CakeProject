@@ -19,6 +19,17 @@ export const semiProductApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SemiProducts"],
     }),
+    updateSemiProduct: builder.mutation({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `tarif-guncelle/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["SemiProducts"],
+    }),
     deleteSemiProduct: builder.mutation({
       query: (id) => ({
         url: `tarif-sil/${id}`,
@@ -27,10 +38,19 @@ export const semiProductApi = baseApi.injectEndpoints({
       invalidatesTags: ["SemiProducts"],
     }),
     addMaterialToSemiProduct: builder.mutation({
-      query(data) {
-        const { id, ...body } = data;
+      query(body) {
         return {
-          url: `tarif-malzeme-ekle/${id}`,
+          url: `tarif-malzeme-ekle`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["SemiProducts"],
+    }),
+    deleteMaterialToSemiProduct: builder.mutation({
+      query(body) {
+        return {
+          url: `tarif-malzeme-sil`,
           method: "PUT",
           body,
         };
@@ -43,6 +63,8 @@ export const semiProductApi = baseApi.injectEndpoints({
 export const {
   useGetSemiProductsQuery,
   useAddSemiProductMutation,
-  useAddMaterialToSemiProductMutation,
+  useUpdateSemiProductMutation,
   useDeleteSemiProductMutation,
+  useAddMaterialToSemiProductMutation,
+  useDeleteMaterialToSemiProductMutation,
 } = semiProductApi;

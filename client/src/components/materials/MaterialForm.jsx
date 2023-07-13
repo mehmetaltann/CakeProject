@@ -4,14 +4,16 @@ import FormTextField from "../UI/form/FormTextField";
 import FormSelect from "../UI/form/FormSelect";
 import FormDatePicker from "../UI/form/FormDatePicker";
 import * as Yup from "yup";
+import { useState } from "react";
 import { Paper, Stack, Typography, MenuItem, Button } from "@mui/material";
 import { Form, Formik, Field } from "formik";
 import { materialDateInput } from "../../utils/help-functions";
 import { useDispatch } from "react-redux";
 import { useAddMaterialMutation } from "../../redux/apis/materialApi";
-import { setSnackbar, setModalOpen } from "../../redux/slices/generalSlice";
+import { setSnackbar} from "../../redux/slices/generalSlice";
 
 const MaterialForm = () => {
+  const [openMaterialAddModal, setOpenMaterialAddModal] = useState(false);
   const [addMaterial] = useAddMaterialMutation();
   const dispatch = useDispatch();
 
@@ -28,7 +30,7 @@ const MaterialForm = () => {
     };
     try {
       const res = await addMaterial(newRecord).unwrap();
-      dispatch(setModalOpen(false));
+      setOpenMaterialAddModal(false);
       dispatch(
         setSnackbar({
           children: res.message,
@@ -66,7 +68,11 @@ const MaterialForm = () => {
         sx={{ p: 2, pl: 3 }}
       >
         <Typography color={"secondary"}>Yeni Malzeme</Typography>
-        <ModalButton title="Yeni Malzeme">
+        <ModalButton
+          title="Yeni Malzeme"
+          modalOpen={openMaterialAddModal}
+          setModalOpen={setOpenMaterialAddModal}
+        >
           <Formik
             initialValues={{
               name: "",
@@ -93,6 +99,7 @@ const MaterialForm = () => {
                   <Field name="type" component={FormSelect} label="Tür">
                     <MenuItem value="Gıda">Gıda</MenuItem>
                     <MenuItem value="Ambalaj">Ambalaj</MenuItem>
+                    <MenuItem value="Diğer">Diğer</MenuItem>
                   </Field>
                   <FormTextField
                     sx={{ width: "100%" }}
@@ -106,7 +113,7 @@ const MaterialForm = () => {
                     <MenuItem value="Adet">Adet</MenuItem>
                     <MenuItem value="MiliLitre">MiliLitre</MenuItem>
                     <MenuItem value="Dakika">Dakika</MenuItem>
-                    <MenuItem value="Metre">Metre</MenuItem>
+                    <MenuItem value="Santimetre">Santimetre</MenuItem>
                   </Field>
                   <FormTextField
                     sx={{ width: "100%" }}

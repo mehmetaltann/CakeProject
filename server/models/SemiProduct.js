@@ -15,7 +15,7 @@ const SemiProductSchema = new mongoose.Schema(
     },
     materials: [
       {
-        mtObj: { type: Schema.Types.ObjectId, ref: "material" },
+        mtId: { type: String, required: true, trim: true, maxLength: 60 },
         mtNumber: {
           type: Number,
           required: true,

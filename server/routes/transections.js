@@ -14,14 +14,18 @@ router.put("/malzeme-guncelle/:id", materialUpdate);
 
 //SemiProductss
 const {
-  semiProductQuery,
   semiProductAdd,
+  semiProductQuery,
+  semiProductUpdate,
   semiProductDelete,
   addMaterialToSemiProduct,
+  deleteMaterialToSemiProduct,
 } = require("../controllers/semiproducts");
-router.post("/tarif-ekle", semiProductAdd);
-router.delete("/tarif-sil/:id", semiProductDelete);
 router.get("/tarif-sorgula", semiProductQuery);
-router.put("/tarif-malzeme-ekle/:id", addMaterialToSemiProduct);
+router.post("/tarif-ekle", semiProductAdd);
+router.put("/tarif-guncelle/:id", semiProductUpdate);
+router.delete("/tarif-sil/:id", semiProductDelete);
+router.put("/tarif-malzeme-ekle", addMaterialToSemiProduct);
+router.put("/tarif-malzeme-sil", deleteMaterialToSemiProduct);
 
 module.exports = router;
