@@ -4,11 +4,59 @@ const {
   dbFindByIdAndDelete,
   dbSave,
   dbFindByIdAndUpdate,
+  dbFindAggregate,
 } = require("./dbQueries.js");
+
+const pQuery = [
+  {
+    $addFields: {
+      convertedMtId: {
+        $map: {
+          input: "$materials",
+          as: "m",
+          in: { $toObjectId: "$$m.mtId" },
+        },
+      },
+      convertedSpId: {
+        $map: {
+          input: "$semiproducts",
+          as: "s",
+          in: { $toObjectId: "$$s.spId" },
+        },
+      },
+    },
+  },
+  {
+    $lookup: {
+      from: "materials",
+      localField: "convertedMtId",
+      foreignField: "_id",
+      as: "mt",
+    },
+  },
+  {
+    $lookup: {
+      from: "semiproducts",
+      localField: "convertedSpId",
+      foreignField: "_id",
+      as: "sp",
+    },
+  },
+  {
+    $project: {
+      _id: 1,
+      name: 1,
+      size: 1,
+      description: 1,
+      materials: "$mt",
+      semiproducts: "$sp",
+    },
+  },
+];
 
 exports.productQuery = async (req, res) => {
   try {
-    const data = await dbFind(ProductSchema);
+    const data = await dbFindAggregate(ProductSchema, pQuery);
     res.status(200).json(data);
   } catch (error) {
     res

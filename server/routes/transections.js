@@ -19,7 +19,7 @@ const {
   semiProductUpdate,
   semiProductDelete,
   addMaterialToSemiProduct,
-  deleteMaterialToSemiProduct,
+  deleteMaterialToSemiProduct
 } = require("../controllers/semiproducts");
 router.get("/tarif-sorgula", semiProductQuery);
 router.post("/tarif-ekle", semiProductAdd);

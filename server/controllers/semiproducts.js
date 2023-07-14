@@ -1,22 +1,106 @@
 const SemiProductSchema = require("../models/SemiProduct.js");
 const ProductSchema = require("../models/Product.js");
 const {
-  dbFind,
   dbFindByIdAndDelete,
   dbSave,
   dbFindByIdAndUpdate,
   dbFindOne,
+  dbFindAggregate,
 } = require("./dbQueries.js");
+
+const spQuery = [
+  {
+    $addFields: {
+      items: {
+        $map: {
+          input: "$materials",
+          in: {
+            $mergeObjects: [
+              "$$this",
+              { itemId: { $toObjectId: "$$this.mtId" } },
+            ],
+          },
+        },
+      },
+    },
+  },
+  {
+    $lookup: {
+      from: "materials",
+      localField: "items.itemId",
+      foreignField: "_id",
+      as: "mat",
+    },
+  },
+  {
+    $addFields: {
+      materials: {
+        $map: {
+          input: "$items",
+          as: "i",
+          in: {
+            $mergeObjects: [
+              "$$i",
+              {
+                $first: {
+                  $filter: {
+                    input: "$mat",
+                    cond: { $eq: ["$$this._id", "$$i.itemId"] },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
+  {
+    $addFields: {
+      matList: {
+        $map: {
+          input: "$materials",
+          as: "m",
+          in: {
+            id: "$$m._id",
+            name: "$$m.name",
+            type: "$$m.type",
+            unit: "$$m.unit",
+            amount: "$$m.amount",
+            price: "$$m.price",
+            description: "$$m.description",
+            brand: "$$m.brand",
+            date: "$$m.date",
+            mtNumber: "$$m.mtNumber",
+            cost: {
+              $multiply: [
+                { $divide: ["$$m.price", "$$m.amount"] },
+                "$$m.mtNumber",
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 1,
+      name: 1,
+      matList: 1,
+      totalCost: { $sum: "$matList.cost" },
+    },
+  },
+];
 
 exports.semiProductQuery = async (req, res) => {
   try {
-    const data = await dbFind(SemiProductSchema);
-    console.log(data)
+    const data = await dbFindAggregate(SemiProductSchema, spQuery);
     res.status(200).json(data);
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Tarifler Gitirilemedi, Server Bağlantı Hatası" });
+      .json({ message: "Tarifler Getirilemedi, Server Bağlantı Hatası" });
   }
 };
 
