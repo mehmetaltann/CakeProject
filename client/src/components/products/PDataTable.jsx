@@ -46,35 +46,33 @@ const PDataTable = () => {
   if (!allMaterials)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
+  console.log(products);
+
   const filteredProductData = products.map((item) => {
     return {
       name: item.name,
       size: item.size,
       description: item.description,
       pId: item.id,
-      materials: item.materials?.map((pmt) => {
-        const foundMt = allMaterials?.find((mt) => mt.id === pmt.mtId);
+      materials: item.materials?.map((material) => {
         return {
-          mtId: foundMt.id,
-          mtName: foundMt.name,
-          mtCost: (foundMt.price * pmt.mtNumber) / foundMt.amount,
-          mtUnit: foundMt.unit,
-          mtAmount: pmt.mtNumber,
+          mtId: material._id,
+          mtName: material.name,
+          mtCost: material.cost,
+          mtUnit: material.unit,
+          mtAmount: material.mtNumber,
         };
       }),
-      semiProducts: item.semiproducts?.map((psp) => {
-        const foundSp = allSemiProducts?.find((sp) => sp.id === psp.spId);
+      semiProducts: item.semiproducts?.map((semiproduct) => {
         return {
-          spId: foundSp.id,
-          spName: foundSp.name,
-          spAmount: psp.spNumber,
+          spId: semiproduct._id,
+          spName: semiproduct.name,
+          spAmount: semiproduct.spNumber,
           spCost: 100,
         };
       }),
     };
   });
-
-  console.log(filteredProductData);
 
   return (
     <TableContainer component={Paper}>

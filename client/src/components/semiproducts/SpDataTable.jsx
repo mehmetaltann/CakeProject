@@ -42,14 +42,13 @@ export default function SpDataTable() {
       name: item.name,
       description: item.description,
       spId: item.id,
-      materials: item.materials.map((spmt) => {
-        const foundMt = allMaterials.find((mt) => mt.id === spmt.mtId);
+      totalCost: item.totalCost,
+      materials: item.materials?.map((mat) => {
         return {
-          mtId: foundMt.id,
-          mtName: foundMt.name,
-          mtCost: ((foundMt.price * spmt.mtNumber) / foundMt.amount),
-          mtUnit: foundMt.unit,
-          mtAmount: spmt.mtNumber,
+          mtId: mat.id,
+          mtName: mat.name,
+          mtCost: mat.cost,
+          mtUnit: mat.unit,
         };
       }),
     };

@@ -10,24 +10,9 @@ const {
 
 const spQuery = [
   {
-    $addFields: {
-      items: {
-        $map: {
-          input: "$materials",
-          in: {
-            $mergeObjects: [
-              "$$this",
-              { itemId: { $toObjectId: "$$this.mtId" } },
-            ],
-          },
-        },
-      },
-    },
-  },
-  {
     $lookup: {
       from: "materials",
-      localField: "items.itemId",
+      localField: "materials._id",
       foreignField: "_id",
       as: "mat",
     },
@@ -36,16 +21,16 @@ const spQuery = [
     $addFields: {
       materials: {
         $map: {
-          input: "$items",
-          as: "i",
+          input: "$materials",
+          as: "m",
           in: {
             $mergeObjects: [
-              "$$i",
+              "$$m",
               {
                 $first: {
                   $filter: {
                     input: "$mat",
-                    cond: { $eq: ["$$this._id", "$$i.itemId"] },
+                    cond: { $eq: ["$$this._id", "$$m._id"] },
                   },
                 },
               },
@@ -57,21 +42,14 @@ const spQuery = [
   },
   {
     $addFields: {
-      matList: {
+      materials: {
         $map: {
           input: "$materials",
           as: "m",
           in: {
             id: "$$m._id",
             name: "$$m.name",
-            type: "$$m.type",
             unit: "$$m.unit",
-            amount: "$$m.amount",
-            price: "$$m.price",
-            description: "$$m.description",
-            brand: "$$m.brand",
-            date: "$$m.date",
-            mtNumber: "$$m.mtNumber",
             cost: {
               $multiply: [
                 { $divide: ["$$m.price", "$$m.amount"] },
@@ -87,8 +65,9 @@ const spQuery = [
     $project: {
       _id: 1,
       name: 1,
-      matList: 1,
-      totalCost: { $sum: "$matList.cost" },
+      materials: 1,
+      description: 1,
+      totalCost: { $sum: "$materials.cost" },
     },
   },
 ];
@@ -159,7 +138,7 @@ exports.semiProductDelete = async (req, res) => {
 exports.addMaterialToSemiProduct = async (req, res) => {
   filter = { _id: req.body.objId };
   updateData = {
-    mtId: req.body.id,
+    _id: req.body.id,
     mtNumber: req.body.number,
   };
   try {
@@ -177,7 +156,7 @@ exports.addMaterialToSemiProduct = async (req, res) => {
 exports.deleteMaterialToSemiProduct = async (req, res) => {
   filter = { _id: req.body.spId };
   updateData = {
-    mtId: req.body.mtId,
+    _id: req.body.mtId,
   };
   try {
     await dbFindByIdAndUpdate(SemiProductSchema, filter, {

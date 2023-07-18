@@ -9,19 +9,84 @@ const {
 
 const pQuery = [
   {
+    $lookup: {
+      from: "materials",
+      localField: "materials._id",
+      foreignField: "_id",
+      as: "mat",
+    },
+  },
+  {
     $addFields: {
-      convertedMtId: {
+      materials: {
         $map: {
           input: "$materials",
           as: "m",
-          in: { $toObjectId: "$$m.mtId" },
+          in: {
+            $mergeObjects: [
+              "$$m",
+              {
+                $first: {
+                  $filter: {
+                    input: "$mat",
+                    cond: { $eq: ["$$this._id", "$$m._id"] },
+                  },
+                },
+              },
+            ],
+          },
         },
       },
-      convertedSpId: {
+    },
+  },
+  {
+    $addFields: {
+      materials: {
+        $map: {
+          input: "$materials",
+          as: "m",
+          in: {
+            id: "$$m._id",
+            name: "$$m.name",
+            unit: "$$m.unit",
+            cost: {
+              $multiply: [
+                { $divide: ["$$m.price", "$$m.amount"] },
+                "$$m.mtNumber",
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    $lookup: {
+      from: "semiproducts",
+      localField: "semiproducts._id",
+      foreignField: "_id",
+      as: "sp",
+    },
+  },
+  {
+    $addFields: {
+      semiproducts: {
         $map: {
           input: "$semiproducts",
           as: "s",
-          in: { $toObjectId: "$$s.spId" },
+          in: {
+            $mergeObjects: [
+              "$$s",
+              {
+                $first: {
+                  $filter: {
+                    input: "$sp",
+                    cond: { $eq: ["$$this._id", "$$s._id"] },
+                  },
+                },
+              },
+            ],
+          },
         },
       },
     },
@@ -29,27 +94,112 @@ const pQuery = [
   {
     $lookup: {
       from: "materials",
-      localField: "convertedMtId",
+      localField: "semiproducts.materials._id",
       foreignField: "_id",
-      as: "mt",
+      as: "mtsp",
     },
   },
   {
-    $lookup: {
-      from: "semiproducts",
-      localField: "convertedSpId",
-      foreignField: "_id",
-      as: "sp",
+    $addFields: {
+      semiproducts: {
+        $map: {
+          input: "$semiproducts",
+          as: "s",
+          in: {
+            spNumber: "$$s.spNumber",
+            id: "$$s._id",
+            name: "$$s.name",
+            description: "$$s.description",
+            materials: {
+              $map: {
+                input: "$$s.materials",
+                as: "sm",
+                in: {
+                  $mergeObjects: [
+                    "$$sm",
+                    {
+                      $first: {
+                        $filter: {
+                          input: "$mtsp",
+                          cond: { $eq: ["$$this._id", "$$sm._id"] },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    $addFields: {
+      semiproducts: {
+        $map: {
+          input: "$semiproducts",
+          as: "s",
+          in: {
+            spNumber: "$$s.spNumber",
+            id: "$$s._id",
+            name: "$$s.name",
+            description: "$$s.description",
+            materials: {
+              $map: {
+                input: "$$s.materials",
+                as: "sm",
+                in: {
+                  cost: {
+                    $multiply: [
+                      { $divide: ["$$sm.price", "$$sm.amount"] },
+                      "$$sm.mtNumber",
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    $addFields: {
+      semiproducts: {
+        $map: {
+          input: "$semiproducts",
+          as: "s",
+          in: {
+            spNumber: "$$s.spNumber",
+            id: "$$s._id",
+            name: "$$s.name",
+            description: "$$s.description",
+            materialcost: {
+              $multiply: [{ $sum: "$$s.materials.cost" }, "$$s.spNumber"],
+            },
+          },
+        },
+      },
     },
   },
   {
     $project: {
       _id: 1,
+      deneme: 1,
       name: 1,
       size: 1,
       description: 1,
-      materials: "$mt",
-      semiproducts: "$sp",
+      materials: 1,
+      semiproducts: 1,
+      totalmaterialscost: { $sum: "$materials.cost" },
+      totalsemiproductscost: { $sum: "$semiproducts.materialcost" },
+      totalCost: {
+        $sum: [
+          { $sum: "$materials.cost" },
+          { $sum: "$semiproducts.materialcost" },
+        ],
+      },
     },
   },
 ];
@@ -111,7 +261,7 @@ exports.productDelete = async (req, res) => {
 exports.addMaterialToProduct = async (req, res) => {
   filter = { _id: req.body.objId };
   updateData = {
-    mtId: req.body.id,
+    _id: req.body.id,
     mtNumber: req.body.number,
   };
   try {
@@ -129,7 +279,7 @@ exports.addMaterialToProduct = async (req, res) => {
 exports.deleteMaterialToProduct = async (req, res) => {
   filter = { _id: req.body.pId };
   updateData = {
-    mtId: req.body.mtId,
+    _id: req.body.mtId,
   };
   try {
     await dbFindByIdAndUpdate(ProductSchema, filter, {
@@ -146,7 +296,7 @@ exports.deleteMaterialToProduct = async (req, res) => {
 exports.addSemiProductToProduct = async (req, res) => {
   filter = { _id: req.body.objId };
   updateData = {
-    spId: req.body.id,
+    _id: req.body.id,
     spNumber: req.body.number,
   };
   try {
@@ -164,7 +314,7 @@ exports.addSemiProductToProduct = async (req, res) => {
 exports.deleteSemiProductToProduct = async (req, res) => {
   filter = { _id: req.body.pId };
   updateData = {
-    spId: req.body.spId,
+    _id: req.body.spId,
   };
   try {
     await dbFindByIdAndUpdate(ProductSchema, filter, {
