@@ -47,7 +47,7 @@ export const semiProductApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["SemiProducts"],
     }),
-    deleteMaterialToSemiProduct: builder.mutation({
+    deleteMaterialFromSemiProduct: builder.mutation({
       query(body) {
         return {
           url: `tarif-malzeme-sil`,
@@ -66,5 +66,5 @@ export const {
   useUpdateSemiProductMutation,
   useDeleteSemiProductMutation,
   useAddMaterialToSemiProductMutation,
-  useDeleteMaterialToSemiProductMutation,
+  useDeleteMaterialFromSemiProductMutation,
 } = semiProductApi;

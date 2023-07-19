@@ -20,7 +20,6 @@ const ProductSchema = new mongoose.Schema(
     },
     materials: [
       {
-        mtId: { type: String, required: true, trim: true, maxLength: 60 },
         mtNumber: {
           type: Number,
           required: true,
@@ -31,7 +30,6 @@ const ProductSchema = new mongoose.Schema(
     ],
     semiproducts: [
       {
-        spId: { type: String, required: true, trim: true, maxLength: 60 },
         spNumber: {
           type: Number,
           required: true,

@@ -49,6 +49,7 @@ const pQuery = [
             id: "$$m._id",
             name: "$$m.name",
             unit: "$$m.unit",
+            mtNumber: "$$m.mtNumber",
             cost: {
               $multiply: [
                 { $divide: ["$$m.price", "$$m.amount"] },
@@ -142,7 +143,7 @@ const pQuery = [
           as: "s",
           in: {
             spNumber: "$$s.spNumber",
-            id: "$$s._id",
+            id: "$$s.id",
             name: "$$s.name",
             description: "$$s.description",
             materials: {
@@ -172,7 +173,7 @@ const pQuery = [
           as: "s",
           in: {
             spNumber: "$$s.spNumber",
-            id: "$$s._id",
+            id: "$$s.id",
             name: "$$s.name",
             description: "$$s.description",
             materialcost: {
@@ -276,7 +277,7 @@ exports.addMaterialToProduct = async (req, res) => {
   }
 };
 
-exports.deleteMaterialToProduct = async (req, res) => {
+exports.deleteMaterialFromProduct = async (req, res) => {
   filter = { _id: req.body.pId };
   updateData = {
     _id: req.body.mtId,
@@ -311,7 +312,7 @@ exports.addSemiProductToProduct = async (req, res) => {
   }
 };
 
-exports.deleteSemiProductToProduct = async (req, res) => {
+exports.deleteSemiProductFromProduct = async (req, res) => {
   filter = { _id: req.body.pId };
   updateData = {
     _id: req.body.spId,

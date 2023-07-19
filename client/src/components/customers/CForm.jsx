@@ -6,7 +6,7 @@ import { Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 
-const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
+const CForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   const dispatch = useDispatch();
 
   async function submitHandler(values) {
@@ -55,6 +55,18 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
             />
             <FormTextField
               sx={{ width: "100%" }}
+              name="surname"
+              label="Soyisim"
+              size="small"
+            />
+            <FormTextField
+              sx={{ width: "100%" }}
+              name="phoennumber"
+              label="Telefon"
+              size="small"
+            />
+            <FormTextField
+              sx={{ width: "100%" }}
               name="description"
               label="Not"
               size="small"
@@ -75,4 +87,4 @@ const SpForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   );
 };
 
-export default SpForm;
+export default CForm;

@@ -1,21 +1,32 @@
+import PageConnectionWait from "../PageConnectionWait";
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../UI/form/FormTextField";
-import FormSelect from "../UI/form/FormSelect";
+import FormTextField from "../form/FormTextField";
+import FormSelect from "../form/FormSelect";
 import * as Yup from "yup";
+import { useGetSemiProductsQuery } from "../../../redux/apis/semiProductApi";
 import { Stack, Button, MenuItem } from "@mui/material";
 import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
-import { setSnackbar } from "../../redux/slices/generalSlice";
+import { setSnackbar } from "../../../redux/slices/generalSlice";
 
-const DataForm = ({
-  setOpenModel,
-  initialValues,
-  submitFunction,
-  selectOptions,
-  ObjId,
-  defV,
-}) => {
+const SemiProductDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
+  const {
+    data: semiProducts,
+    isLoading,
+    isFetching,
+  } = useGetSemiProductsQuery();
+
   const dispatch = useDispatch();
+
+  if (isLoading && isFetching)
+    return <PageConnectionWait title="Veriler Bekleniyor" />;
+
+  if (!semiProducts)
+    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
+
+  const initialSelectValueSm = semiProducts?.find(
+    (item) => item.name === "Pastacı Kreması"
+  );
 
   const validateSchema = Yup.object().shape({
     amount: Yup.number()
@@ -51,7 +62,10 @@ const DataForm = ({
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        title: initialSelectValueSm.id,
+        amount: 0,
+      }}
       onSubmit={submitHandler}
       validationSchema={validateSchema}
     >
@@ -62,9 +76,9 @@ const DataForm = ({
               name="title"
               component={FormSelect}
               label="İsim"
-              defaultValue={defV}
+              defaultValue="64afad9eda7e337a51b304c8"
             >
-              {selectOptions.map((item, index) => (
+              {semiProducts.map((item, index) => (
                 <MenuItem value={item.id} key={index}>
                   {item.name}
                 </MenuItem>
@@ -73,7 +87,7 @@ const DataForm = ({
             <FormTextField
               sx={{ width: "100%" }}
               name="amount"
-              label="Miktar"
+              label="Ölçü"
               type="number"
               size="small"
             />
@@ -93,4 +107,4 @@ const DataForm = ({
   );
 };
 
-export default DataForm;
+export default SemiProductDataForm;

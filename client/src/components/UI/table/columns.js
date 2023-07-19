@@ -3,9 +3,9 @@ import { dateFormat } from "../../../utils/help-functions";
 export const dateColumn = (
   fieldName,
   headerName,
-  minWidth = 125,
-  width = 150,
-  maxWidth = 200,
+  minWidth,
+  width,
+  maxWidth,
   rest
 ) => {
   return {

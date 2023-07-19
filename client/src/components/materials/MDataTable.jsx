@@ -17,7 +17,7 @@ import {
   priceColumn,
   numberColumn,
   actionColumn,
-} from "../../components/UI/table/columns";
+} from "../UI/table/columns";
 
 const useFakeMutation = () => {
   return useCallback(
@@ -35,7 +35,7 @@ const useFakeMutation = () => {
   );
 };
 
-const DataTable = () => {
+const MDataTable = () => {
   const [deleteMaterial] = useDeleteMaterialMutation();
   const [updateMaterial] = useUpdateMaterialMutation();
   const { data: materials, isLoading, isFetching } = useGetMaterialsQuery();
@@ -108,7 +108,7 @@ const DataTable = () => {
       },
     }),
     stringColumn("type", "Tür", 100, 120, 150),
-    dateColumn("date", "Alış Tarihi", {
+    dateColumn("date", "Alış Tarihi", 125, 150, 200, {
       editable: true,
     }),
     actionColumn({
@@ -157,4 +157,4 @@ const DataTable = () => {
   );
 };
 
-export default DataTable;
+export default MDataTable;

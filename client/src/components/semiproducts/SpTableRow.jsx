@@ -4,13 +4,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModalButton from "../UI/ModalButton";
 import ModalIconButton from "../UI/ModalIconButton";
 import SpForm from "./SpForm";
-import DataForm from "../UI/DataForm";
+import MaterialDataForm from "../UI/dataForms/MaterialDataForm";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   useDeleteSemiProductMutation,
   useAddMaterialToSemiProductMutation,
-  useDeleteMaterialToSemiProductMutation,
+  useDeleteMaterialFromSemiProductMutation,
   useUpdateSemiProductMutation,
 } from "../../redux/apis/semiProductApi";
 import { setSnackbar } from "../../redux/slices/generalSlice";
@@ -25,7 +25,7 @@ import {
   Collapse,
 } from "@mui/material";
 
-const SpTableRow = ({ data, allMaterials }) => {
+const SpTableRow = ({ data }) => {
   const { spId, name, description, materials } = data;
   const [open, setOpen] = useState(false);
   const [openAddMtToSpModal, setOpenAddMtToSpModal] = useState(false);
@@ -33,16 +33,14 @@ const SpTableRow = ({ data, allMaterials }) => {
   const [updateSemiProduct] = useUpdateSemiProductMutation();
   const [deleteSemiProduct] = useDeleteSemiProductMutation();
   const [addMaterialToSemiProduct] = useAddMaterialToSemiProductMutation();
-  const [deleteMaterialToSemiProduct] =
-    useDeleteMaterialToSemiProductMutation();
+  const [deleteMaterialFromSemiProduct] =
+    useDeleteMaterialFromSemiProductMutation();
 
   const dispatch = useDispatch();
 
   const spTotalCost = materials
     .reduce((n, { mtCost }) => n + mtCost, 0)
     .toFixed(2);
-
-  const initialSelectValueId = allMaterials?.find((item) => item.name === "Un");
 
   return (
     <Fragment>
@@ -155,7 +153,7 @@ const SpTableRow = ({ data, allMaterials }) => {
                             color="secondary"
                             onClick={async () => {
                               try {
-                                const res = await deleteMaterialToSemiProduct({
+                                const res = await deleteMaterialFromSemiProduct({
                                   mtId,
                                   spId,
                                 }).unwrap();
@@ -193,16 +191,10 @@ const SpTableRow = ({ data, allMaterials }) => {
                         modalOpen={openAddMtToSpModal}
                         setModalOpen={setOpenAddMtToSpModal}
                       >
-                        <DataForm
+                        <MaterialDataForm
                           setOpenModel={setOpenAddMtToSpModal}
-                          initialValues={{
-                            title: initialSelectValueId.id,
-                            amount: 0,
-                          }}
                           submitFunction={addMaterialToSemiProduct}
-                          selectOptions={allMaterials}
                           ObjId={spId}
-                          defV="64a7c881616d29bc3389a65a"
                         />
                       </ModalButton>
                     </TableCell>

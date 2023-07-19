@@ -153,7 +153,7 @@ exports.addMaterialToSemiProduct = async (req, res) => {
   }
 };
 
-exports.deleteMaterialToSemiProduct = async (req, res) => {
+exports.deleteMaterialFromSemiProduct = async (req, res) => {
   filter = { _id: req.body.spId };
   updateData = {
     _id: req.body.mtId,

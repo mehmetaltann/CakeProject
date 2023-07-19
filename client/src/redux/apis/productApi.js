@@ -47,7 +47,7 @@ export const productApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Products"],
     }),
-    deleteMaterialToProduct: builder.mutation({
+    deleteMaterialFromProduct: builder.mutation({
       query(body) {
         return {
           url: `urun-malzeme-sil`,
@@ -67,7 +67,7 @@ export const productApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Products"],
     }),
-    deleteSemiProductToProduct: builder.mutation({
+    deleteSemiProductFromProduct: builder.mutation({
       query(body) {
         return {
           url: `urun-tarif-sil`,
@@ -86,7 +86,7 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useAddMaterialToProductMutation,
-  useDeleteMaterialToProductMutation,
+  useDeleteMaterialFromProductMutation,
   useAddSemiProductToProductMutation,
-  useDeleteSemiProductToProductMutation,
+  useDeleteSemiProductFromProductMutation,
 } = productApi;

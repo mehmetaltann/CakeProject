@@ -1,7 +1,8 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DataForm from "../UI/DataForm";
+import SemiProductDataForm from "../UI/dataForms/SemiProductDataForm";
+import MaterialDataForm from "../UI/dataForms/MaterialDataForm";
 import ModalButton from "../UI/ModalButton";
 import ModalIconButton from "../UI/ModalIconButton";
 import PForm from "./PForm";
@@ -11,9 +12,9 @@ import {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useAddMaterialToProductMutation,
-  useDeleteMaterialToProductMutation,
+  useDeleteMaterialFromProductMutation,
   useAddSemiProductToProductMutation,
-  useDeleteSemiProductToProductMutation,
+  useDeleteSemiProductFromProductMutation,
 } from "../../redux/apis/productApi";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 import {
@@ -27,8 +28,9 @@ import {
   Collapse,
 } from "@mui/material";
 
-const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
-  const { pId, name, size, description, materials, semiProducts } = data;
+const PTableRow = ({ data }) => {
+  const { pId, name, size, description, materials, semiProducts, totalCost } =
+    data;
   const [open, setOpen] = useState(false);
   const [openAddMtToPModal, setOpenAddMtToPModal] = useState(false);
   const [openAddSpToPModal, setOpenAddSpToPModal] = useState(false);
@@ -36,20 +38,12 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [addMaterialToProduct] = useAddMaterialToProductMutation();
-  const [deleteMaterialToProduct] = useDeleteMaterialToProductMutation();
+  const [deleteMaterialFromProduct] = useDeleteMaterialFromProductMutation();
   const [addSemiProductToProduct] = useAddSemiProductToProductMutation();
-  const [deleteSemiProductToProduct] = useDeleteSemiProductToProductMutation();
+  const [deleteSemiProductFromProduct] =
+    useDeleteSemiProductFromProductMutation();
 
   const dispatch = useDispatch();
-
-  const pTotalCost =
-    materials.reduce((n, { mtCost }) => n + mtCost, 0) +
-    semiProducts.reduce((n, { mtCost }) => n + mtCost, 0);
-
-  const initialSelectValueMt = allMaterials?.find((item) => item.name === "Un");
-  const initialSelectValueSm = allSemiProducts?.find(
-    (item) => item.name === "Pastacı Kreması"
-  );
 
   return (
     <Fragment>
@@ -70,7 +64,7 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
           align="left"
           sx={{ color: "secondary.main", fontWeight: 500 }}
         >
-          {`${pTotalCost} TL`}
+          {`${totalCost.toFixed(2)} TL`}
         </TableCell>
         <TableCell align="left">{description}</TableCell>
         <TableCell align="left">
@@ -102,7 +96,7 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
             height={{ md: "35vh" }}
             modalOpen={openEditPModal}
             setModalOpen={setOpenEditPModal}
-            title="Tarif Güncelle"
+            title="Ürün Güncelle"
           >
             <PForm
               setOpenModel={setOpenEditPModal}
@@ -172,7 +166,7 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
                             color="secondary"
                             onClick={async () => {
                               try {
-                                const res = await deleteSemiProductToProduct({
+                                const res = await deleteSemiProductFromProduct({
                                   spId,
                                   pId,
                                 }).unwrap();
@@ -210,16 +204,10 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
                         modalOpen={openAddSpToPModal}
                         setModalOpen={setOpenAddSpToPModal}
                       >
-                        <DataForm
+                        <SemiProductDataForm
                           setOpenModel={setOpenAddSpToPModal}
-                          initialValues={{
-                            title: initialSelectValueSm.id,
-                            amount: 0,
-                          }}
                           submitFunction={addSemiProductToProduct}
-                          selectOptions={allSemiProducts}
                           ObjId={pId}
-                          defV="64afad9eda7e337a51b304c8"
                         />
                       </ModalButton>
                     </TableCell>
@@ -263,7 +251,7 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
                             color="secondary"
                             onClick={async () => {
                               try {
-                                const res = await deleteMaterialToProduct({
+                                const res = await deleteMaterialFromProduct({
                                   mtId,
                                   pId,
                                 }).unwrap();
@@ -301,16 +289,10 @@ const PTableRow = ({ data, allMaterials, allSemiProducts }) => {
                         modalOpen={openAddMtToPModal}
                         setModalOpen={setOpenAddMtToPModal}
                       >
-                        <DataForm
+                        <MaterialDataForm
                           setOpenModel={setOpenAddMtToPModal}
-                          initialValues={{
-                            title: initialSelectValueMt.id,
-                            amount: 0,
-                          }}
                           submitFunction={addMaterialToProduct}
-                          selectOptions={allMaterials}
                           ObjId={pId}
-                          defV="64a7c881616d29bc3389a65a"
                         />
                       </ModalButton>
                     </TableCell>

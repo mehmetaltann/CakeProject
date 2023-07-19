@@ -1,7 +1,6 @@
 import PageConnectionWait from "../UI/PageConnectionWait";
 import SpTableRow from "./SpTableRow";
 import { useGetSemiProductsQuery } from "../../redux/apis/semiProductApi";
-import { useGetMaterialsQuery } from "../../redux/apis/materialApi";
 import {
   Table,
   TableBody,
@@ -19,22 +18,10 @@ export default function SpDataTable() {
     isFetching,
   } = useGetSemiProductsQuery();
 
-  const {
-    data: allMaterials,
-    isLoading: MtLoading,
-    isFetching: MtFetching,
-  } = useGetMaterialsQuery();
-
   if (isLoading && isFetching)
     return <PageConnectionWait title="Veriler Bekleniyor" />;
 
   if (!semiProducts)
-    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
-
-  if (MtLoading && MtFetching)
-    return <PageConnectionWait title="Veriler Bekleniyor" />;
-
-  if (!allMaterials)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
   const filteredSemiProductData = semiProducts.map((item) => {
@@ -68,11 +55,7 @@ export default function SpDataTable() {
         </TableHead>
         <TableBody>
           {filteredSemiProductData.map((item) => (
-            <SpTableRow
-              data={item}
-              allMaterials={allMaterials}
-              key={item.spId}
-            />
+            <SpTableRow data={item} key={item.spId} />
           ))}
         </TableBody>
       </Table>

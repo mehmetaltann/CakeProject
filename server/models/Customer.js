@@ -14,7 +14,7 @@ const CustomerSchema = new mongoose.Schema(
       trim: true,
       maxLength: 60,
     },
-    orders: [{ type: Schema.Types.ObjectId, ref: "order" }],
+    orders: [],
     phonenumber: {
       type: String,
       trim: true,
