@@ -12,10 +12,13 @@ const CForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   async function submitHandler(values) {
     const newRecord = {
       name: values.name,
+      surname: values.surname,
+      phonenumber: values.phonenumber,
       description: values.description,
       id: objId,
     };
     try {
+      console.log(newRecord)
       const res = await submitFunction(newRecord).unwrap();
       setOpenModel(false);
       dispatch(
@@ -36,6 +39,7 @@ const CForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
 
   const validateSchema = Yup.object().shape({
     name: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
+    surname: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
   });
 
   return (
@@ -61,7 +65,7 @@ const CForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
             />
             <FormTextField
               sx={{ width: "100%" }}
-              name="phoennumber"
+              name="phonenumber"
               label="Telefon"
               size="small"
             />

@@ -1,10 +1,10 @@
 import PageConnectionWait from "../PageConnectionWait";
 import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../form/FormTextField";
-import FormSelect from "../form/FormSelect";
 import * as Yup from "yup";
+import { Autocomplete } from "formik-mui";
 import { useGetSemiProductsQuery } from "../../../redux/apis/semiProductApi";
-import { Stack, Button, MenuItem } from "@mui/material";
+import { Stack, Button, TextField } from "@mui/material";
 import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../../redux/slices/generalSlice";
@@ -24,10 +24,6 @@ const SemiProductDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   if (!semiProducts)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
-  const initialSelectValueSm = semiProducts?.find(
-    (item) => item.name === "Pastacı Kreması"
-  );
-
   const validateSchema = Yup.object().shape({
     amount: Yup.number()
       .required("Gerekli")
@@ -37,7 +33,7 @@ const SemiProductDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   async function submitHandler(values) {
     const newRecord = {
       objId: ObjId,
-      id: values.title,
+      id: values.title.id,
       number: values.amount,
     };
 
@@ -63,27 +59,33 @@ const SemiProductDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   return (
     <Formik
       initialValues={{
-        title: initialSelectValueSm.id,
+        title: null,
         amount: 0,
       }}
       onSubmit={submitHandler}
       validationSchema={validateSchema}
     >
-      {({ values }) => (
+      {({ values, setFieldValue, touched, errors }) => (
         <Form>
           <Stack spacing={2} sx={{ pl: 1 }}>
             <Field
               name="title"
-              component={FormSelect}
-              label="İsim"
-              defaultValue="64afad9eda7e337a51b304c8"
-            >
-              {semiProducts.map((item, index) => (
-                <MenuItem value={item.id} key={index}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Field>
+              component={Autocomplete}
+              options={semiProducts}
+              getOptionLabel={(option) => option.name || ""}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  onChange={(e, value) => setFieldValue("title", value || null)}
+                  name="title"
+                  error={touched["title"] && !!errors["title"]}
+                  helperText={errors["title"]}
+                  label="Tarif Seç"
+                  variant="outlined"
+                />
+              )}
+            />
             <FormTextField
               sx={{ width: "100%" }}
               name="amount"

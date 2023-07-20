@@ -23,6 +23,8 @@ const Customers = () => {
             setOpenModel={setOpenCAddModal}
             initialValues={{
               name: "",
+              surname: "",
+              phonenumber: "",
               description: "",
             }}
             submitFunction={addCustomer}

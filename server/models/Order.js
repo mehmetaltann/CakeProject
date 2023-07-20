@@ -31,7 +31,7 @@ const OrderSchema = new mongoose.Schema(
       trim: true,
       maxLength: 20,
     },
-    customer: { type: String, trim: true, maxLength: 20, required: true },
+    customerId: { type: String, trim: true, maxLength: 40, required: true },
     products: [],
   },
   { timestamps: true }

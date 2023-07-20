@@ -14,7 +14,15 @@ const CustomerSchema = new mongoose.Schema(
       trim: true,
       maxLength: 60,
     },
-    orders: [],
+    orders: [
+      {
+        mtNumber: {
+          type: Number,
+          trim: true,
+          maxLength: 20,
+        },
+      },
+    ],
     phonenumber: {
       type: String,
       trim: true,
@@ -22,7 +30,6 @@ const CustomerSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
       trim: true,
       maxLength: 60,
     },

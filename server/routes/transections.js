@@ -54,12 +54,24 @@ const {
   customerQuery,
   customerUpdate,
   customerDelete,
-  deleteOrderFromCustomer,
 } = require("../controllers/customers");
 router.post("/musteri-ekle", customerAdd);
 router.get("/musteri-sorgula", customerQuery);
 router.delete("/musteri-sil/:id", customerDelete);
 router.put("/musteri-guncelle/:id", customerUpdate);
-router.put("/musteri-siparis-sil", deleteOrderFromCustomer);
+
+//Orders
+const {
+  orderAdd,
+  orderQuery,
+  orderDelete,
+  addProductToOrder,
+  deleteProductFromOrder,
+} = require("../controllers/orders");
+router.post("/siparis-ekle", orderAdd);
+router.get("/siparis-sorgula", orderQuery);
+router.delete("/siparis-sil/:id", orderDelete);
+router.put("/siparis-urun-ekle", addProductToOrder);
+router.put("/siparis-urun-sil", deleteProductFromOrder);
 
 module.exports = router;

@@ -1,17 +1,16 @@
 import PageConnectionWait from "../PageConnectionWait";
 import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../form/FormTextField";
-import FormSelect from "../form/FormSelect";
 import * as Yup from "yup";
 import { useGetMaterialsQuery } from "../../../redux/apis/materialApi";
-import { Stack, Button, MenuItem } from "@mui/material";
+import { Stack, Button, TextField } from "@mui/material";
 import { Form, Formik, Field } from "formik";
+import { Autocomplete } from "formik-mui";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../../redux/slices/generalSlice";
 
 const MaterialDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   const { data: materials, isLoading, isFetching } = useGetMaterialsQuery();
-
   const dispatch = useDispatch();
 
   if (isLoading && isFetching)
@@ -19,8 +18,6 @@ const MaterialDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
 
   if (!materials)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
-
-  const initialSelectValueMt = materials?.find((item) => item.name === "Un");
 
   const validateSchema = Yup.object().shape({
     amount: Yup.number()
@@ -31,10 +28,9 @@ const MaterialDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   async function submitHandler(values) {
     const newRecord = {
       objId: ObjId,
-      id: values.title,
+      id: values.title.id,
       number: values.amount,
     };
-
     try {
       const res = await submitFunction(newRecord).unwrap();
       setOpenModel(false);
@@ -57,27 +53,33 @@ const MaterialDataForm = ({ setOpenModel, submitFunction, ObjId }) => {
   return (
     <Formik
       initialValues={{
-        title: initialSelectValueMt.id,
+        title: null,
         amount: 0,
       }}
       onSubmit={submitHandler}
       validationSchema={validateSchema}
     >
-      {({ values }) => (
+      {({ setFieldValue, touched, errors }) => (
         <Form>
           <Stack spacing={2} sx={{ pl: 1 }}>
             <Field
               name="title"
-              component={FormSelect}
-              label="İsim"
-              defaultValue="64a7c881616d29bc3389a65a"
-            >
-              {materials.map((item, index) => (
-                <MenuItem value={item.id} key={index}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Field>
+              component={Autocomplete}
+              options={materials}
+              getOptionLabel={(option) => option.name || ""}
+              style={{ width: "100%" }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  onChange={(e, value) => setFieldValue("title", value || null)}
+                  name="title"
+                  error={touched["title"] && !!errors["title"]}
+                  helperText={errors["title"]}
+                  label="Malzeme Seç"
+                  variant="outlined"
+                />
+              )}
+            />
             <FormTextField
               sx={{ width: "100%" }}
               name="amount"

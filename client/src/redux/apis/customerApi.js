@@ -37,16 +37,6 @@ export const customerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Customers"],
     }),
-    deleteOrderFromCustomer: builder.mutation({
-      query(body) {
-        return {
-          url: `musteri-siparis-sil`,
-          method: "PUT",
-          body,
-        };
-      },
-      invalidatesTags: ["Customers"],
-    }),
   }),
 });
 
@@ -55,5 +45,4 @@ export const {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
-  useDeleteOrderFromCustomerMutation,
 } = customerApi;

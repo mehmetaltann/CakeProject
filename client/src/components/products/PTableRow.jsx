@@ -195,7 +195,7 @@ const PTableRow = ({ data }) => {
                   <TableRow>
                     <TableCell align="right" colSpan={6}>
                       <ModalButton
-                        height={{ md: "25vh" }}
+                        height="30vh"
                         color="primary"
                         endIconLogo="add"
                         buttonTitle="Yeni Tarif Ekle"
@@ -280,7 +280,7 @@ const PTableRow = ({ data }) => {
                   <TableRow>
                     <TableCell align="right" colSpan={6}>
                       <ModalButton
-                        height={{ md: "25vh" }}
+                        height="30vh"
                         color="primary"
                         endIconLogo="add"
                         buttonTitle="Yeni Malzeme Ekle"

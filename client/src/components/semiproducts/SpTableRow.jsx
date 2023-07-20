@@ -7,13 +7,13 @@ import SpForm from "./SpForm";
 import MaterialDataForm from "../UI/dataForms/MaterialDataForm";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
+import { setSnackbar } from "../../redux/slices/generalSlice";
 import {
   useDeleteSemiProductMutation,
   useAddMaterialToSemiProductMutation,
   useDeleteMaterialFromSemiProductMutation,
   useUpdateSemiProductMutation,
 } from "../../redux/apis/semiProductApi";
-import { setSnackbar } from "../../redux/slices/generalSlice";
 import {
   Table,
   IconButton,
@@ -153,10 +153,12 @@ const SpTableRow = ({ data }) => {
                             color="secondary"
                             onClick={async () => {
                               try {
-                                const res = await deleteMaterialFromSemiProduct({
-                                  mtId,
-                                  spId,
-                                }).unwrap();
+                                const res = await deleteMaterialFromSemiProduct(
+                                  {
+                                    mtId,
+                                    spId,
+                                  }
+                                ).unwrap();
                                 dispatch(
                                   setSnackbar({
                                     children: res.message,
@@ -182,7 +184,7 @@ const SpTableRow = ({ data }) => {
                   <TableRow>
                     <TableCell align="right" colSpan={6}>
                       <ModalButton
-                        height={{ md: "25vh" }}
+                        height="30vh"
                         color="primary"
                         endIconLogo="add"
                         buttonTitle="Yeni Malzeme Ekle"
