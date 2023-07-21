@@ -3,7 +3,12 @@ import CTableRow from "./CTableRow";
 import TablePaginationActions from "../UI/table/TablePaginationActions";
 import { useGetCustomersQuery } from "../../redux/apis/customerApi";
 import { Fragment, useState } from "react";
-import { getComparator, sortedFilteredData } from "../../utils/sort-functions";
+import { useSelector } from "react-redux";
+import {
+  getComparator,
+  sortedFilteredData,
+  filterData,
+} from "../../utils/sort-functions";
 import {
   Table,
   TableBody,
@@ -17,6 +22,8 @@ import {
 } from "@mui/material";
 
 const CDataTable = () => {
+  //for filter
+  const { searchQuery } = useSelector((state) => state.general);
   //for sorting
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("");
@@ -57,6 +64,11 @@ const CDataTable = () => {
     getComparator(orderDirection, valueToOrderBy)
   );
 
+  const keys = Object.keys(tableData[0]);
+  keys.pop();
+
+  const lastFilteredData = filterData(tableData, keys, searchQuery);
+
   const createSortHandler = (property) => (event) => {
     const isAscending = valueToOrderBy === property && orderDirection === "asc";
     setValueToOrderBy(property);
@@ -64,9 +76,7 @@ const CDataTable = () => {
   };
 
   const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - filteredData.length)
-      : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredData.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -112,11 +122,11 @@ const CDataTable = () => {
 
           <TableBody>
             {(rowsPerPage > 0
-              ? tableData.slice(
+              ? lastFilteredData.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : tableData
+              : lastFilteredData
             ).map((item) => (
               <CTableRow data={item} key={item.cId} />
             ))}

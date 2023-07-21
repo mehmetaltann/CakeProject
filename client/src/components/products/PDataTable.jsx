@@ -2,8 +2,13 @@ import PageConnectionWait from "../UI/PageConnectionWait";
 import PTableRow from "./PTableRow";
 import TablePaginationActions from "../UI/table/TablePaginationActions";
 import { Fragment, useState } from "react";
-import { getComparator, sortedFilteredData } from "../../utils/sort-functions";
 import { useGetProductsQuery } from "../../redux/apis/productApi";
+import { useSelector } from "react-redux";
+import {
+  getComparator,
+  sortedFilteredData,
+  filterData,
+} from "../../utils/sort-functions";
 import {
   Table,
   TableBody,
@@ -17,8 +22,12 @@ import {
 } from "@mui/material";
 
 const PDataTable = () => {
+  //for filter
+  const { searchQuery } = useSelector((state) => state.general);
+  //for sorting
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("");
+  //for pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const { data: products, isLoading, isFetching } = useGetProductsQuery();
@@ -60,6 +69,12 @@ const PDataTable = () => {
     filteredData,
     getComparator(orderDirection, valueToOrderBy)
   );
+
+  const keys = Object.keys(tableData[0]);
+  keys.pop();
+  keys.pop();
+
+  const lastFilteredData = filterData(tableData, keys, searchQuery);
 
   const createSortHandler = (property) => (event) => {
     const isAscending = valueToOrderBy === property && orderDirection === "asc";
@@ -111,13 +126,13 @@ const PDataTable = () => {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? tableData.slice(
+              ? lastFilteredData.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : tableData
+              : lastFilteredData
             ).map((item) => (
-              <PTableRow data={item} key={item.cId} />
+              <PTableRow data={item} key={item.pId} />
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

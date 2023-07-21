@@ -1,4 +1,4 @@
-import { dateFormat } from "../../../utils/help-functions";
+import { dateFormat } from "../../../utils/time-functions";
 
 export const dateColumn = (
   fieldName,

@@ -2,8 +2,13 @@ import PageConnectionWait from "../UI/PageConnectionWait";
 import SpTableRow from "./SpTableRow";
 import TablePaginationActions from "../UI/table/TablePaginationActions";
 import { Fragment, useState } from "react";
-import { getComparator, sortedFilteredData } from "../../utils/sort-functions";
+import { useSelector } from "react-redux";
 import { useGetSemiProductsQuery } from "../../redux/apis/semiProductApi";
+import {
+  getComparator,
+  sortedFilteredData,
+  filterData,
+} from "../../utils/sort-functions";
 import {
   Table,
   TableBody,
@@ -17,8 +22,12 @@ import {
 } from "@mui/material";
 
 export default function SpDataTable() {
+  //for filter
+  const { searchQuery } = useSelector((state) => state.general);
+  //for sorting
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("");
+  //for pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const {
@@ -54,6 +63,11 @@ export default function SpDataTable() {
     filteredData,
     getComparator(orderDirection, valueToOrderBy)
   );
+
+  const keys = Object.keys(tableData[0]);
+  keys.pop();
+
+  const lastFilteredData = filterData(tableData, keys, searchQuery);
 
   const createSortHandler = (property) => (event) => {
     const isAscending = valueToOrderBy === property && orderDirection === "asc";
@@ -92,7 +106,9 @@ export default function SpDataTable() {
               <TableCell align="left" key="totalCost">
                 <TableSortLabel
                   active={valueToOrderBy === "totalCost"}
-                  direction={valueToOrderBy === "totalCost" ? orderDirection : "asc"}
+                  direction={
+                    valueToOrderBy === "totalCost" ? orderDirection : "asc"
+                  }
                   onClick={createSortHandler("totalCost")}
                 >
                   Maliyet
@@ -104,13 +120,13 @@ export default function SpDataTable() {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? tableData.slice(
+              ? lastFilteredData.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : tableData
+              : lastFilteredData
             ).map((item) => (
-              <SpTableRow data={item} key={item.cId} />
+              <SpTableRow data={item} key={item.spId} />
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

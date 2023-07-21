@@ -2,6 +2,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CakeIcon from "@mui/icons-material/Cake";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setSearchQuery } from "../redux/slices/generalSlice";
+import { useDispatch } from "react-redux";
 import {
   Menu,
   AppBar,
@@ -28,6 +30,7 @@ const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <AppBar position="static" color="secondary">
@@ -91,6 +94,7 @@ const NavBar = () => {
                   onClick={() => {
                     navigate(`/${link}`);
                     setAnchorElNav(null);
+                    dispatch(setSearchQuery(""));
                   }}
                 >
                   <Typography textAlign="center">{title}</Typography>
@@ -131,7 +135,10 @@ const NavBar = () => {
             {pages.map(({ title, link }) => (
               <Button
                 key={title}
-                onClick={() => navigate(`/${link}`)}
+                onClick={() => {
+                  navigate(`/${link}`);
+                  dispatch(setSearchQuery(""));
+                }}
                 sx={{
                   my: 2,
                   color: "white",

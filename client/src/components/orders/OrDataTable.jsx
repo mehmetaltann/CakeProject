@@ -3,8 +3,13 @@ import OrTableRow from "./OrTableRow";
 import TablePaginationActions from "../UI/table/TablePaginationActions";
 import OrDataTableHeader from "./OrDataTableHeader";
 import { Fragment, useState } from "react";
-import { getComparator, sortedFilteredData } from "../../utils/sort-functions";
+import { useSelector } from "react-redux";
 import { useGetOrdersQuery } from "../../redux/apis/orderApi";
+import {
+  getComparator,
+  sortedFilteredData,
+  filterData,
+} from "../../utils/sort-functions";
 import {
   Table,
   TableBody,
@@ -17,6 +22,8 @@ import {
 } from "@mui/material";
 
 const OrDataTable = () => {
+  //for filter
+  const { searchQuery } = useSelector((state) => state.general);
   //for sorting
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("");
@@ -59,6 +66,11 @@ const OrDataTable = () => {
     getComparator(orderDirection, valueToOrderBy)
   );
 
+  const keys = Object.keys(tableData[0]);
+  keys.pop();
+
+  const lastFilteredData = filterData(tableData, keys, searchQuery);
+
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredData.length) : 0;
 
@@ -85,13 +97,13 @@ const OrDataTable = () => {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? tableData.slice(
+              ? lastFilteredData.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : tableData
+              : lastFilteredData
             ).map((item) => (
-              <OrTableRow data={item} key={item.cId} />
+              <OrTableRow data={item} key={item.orId} />
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

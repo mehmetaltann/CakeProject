@@ -53,7 +53,6 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
       desription: values.desription,
       cost: pickedProduct.totalCost,
     };
-    console.log(newRecord);
     try {
       const res = await submitFunction(newRecord).unwrap();
       setOpenModel(false);

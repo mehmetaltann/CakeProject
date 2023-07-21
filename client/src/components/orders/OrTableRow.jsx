@@ -1,7 +1,7 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { dateFormat } from "../../utils/help-functions";
+import { dateFormat } from "../../utils/time-functions";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
@@ -121,7 +121,7 @@ const OrTableRow = ({ data }) => {
                 <TableBody>
                   {orProducts?.map(({ prId, prName, prSize }, index) => (
                     <TableRow
-                      key={prId}
+                      key={index}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}

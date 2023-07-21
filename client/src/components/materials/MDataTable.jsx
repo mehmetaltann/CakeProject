@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import DataTableFrame from "../UI/table/DataTableFrame";
 import PageConnectionWait from "../UI/PageConnectionWait";
-import { dateFormatNormal } from "../../utils/help-functions";
+import { dateFormatNormal } from "../../utils/time-functions";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 import { useDispatch } from "react-redux";
 import { IconButton } from "@mui/material";

@@ -1,6 +1,10 @@
 {
   "editor.fontLigatures": true,
   "editor.fontFamily": "'Fira Code iScript', Consolas, 'Courier New', monospace",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
@@ -157,5 +161,8 @@
         }
       }
     ]
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

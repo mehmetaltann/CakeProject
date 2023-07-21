@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   snackbar: null,
+  searchQuery: "",
 };
 
 export const generalSlice = createSlice({
@@ -11,8 +12,11 @@ export const generalSlice = createSlice({
     setSnackbar: (state, { payload }) => {
       state.snackbar = payload;
     },
+    setSearchQuery: (state, { payload }) => {
+      state.searchQuery = payload;
+    },
   },
 });
 
 export default generalSlice.reducer;
-export const { setSnackbar } = generalSlice.actions;
+export const { setSnackbar,setSearchQuery } = generalSlice.actions;

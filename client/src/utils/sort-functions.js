@@ -14,7 +14,6 @@ export function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-
 export function sortedFilteredData(rowArray, comparator) {
   const stabilizedRowArray = rowArray.map((el, index) => [el, index]);
   stabilizedRowArray.sort((a, b) => {
@@ -25,3 +24,8 @@ export function sortedFilteredData(rowArray, comparator) {
   return stabilizedRowArray.map((el) => el[0]);
 }
 
+export function filterData(data,keys,searchQuery) {
+  return data.filter((item) =>
+    keys.some((key) => String(item[key]).toLowerCase().includes(searchQuery))
+  );
+}
