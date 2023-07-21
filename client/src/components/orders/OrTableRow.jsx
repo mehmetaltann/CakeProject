@@ -58,8 +58,8 @@ const OrTableRow = ({ data }) => {
         >
           {dateFormat(orDate)}
         </TableCell>
-        <TableCell align="left">{orModel}</TableCell>
         <TableCell align="left">{orType}</TableCell>
+        <TableCell align="left">{orModel}</TableCell>
         <TableCell align="left">{`${orPrice.toFixed(2)} TL`}</TableCell>
         <TableCell align="left">{`${orCost.toFixed(2)} TL`}</TableCell>
         <TableCell align="left">{`${(orPrice - orCost).toFixed(
@@ -68,7 +68,7 @@ const OrTableRow = ({ data }) => {
         <TableCell align="left">{`${(
           ((orPrice - orCost) / orCost) *
           100
-        ).toFixed(2)} TL`}</TableCell>
+        ).toFixed(2)}`}</TableCell>
         <TableCell align="left">{`${orCustomerName} ${orCustomerSurname}`}</TableCell>
         <TableCell align="left">{orDescription}</TableCell>
         <TableCell align="left">

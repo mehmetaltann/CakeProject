@@ -12,14 +12,14 @@
     "formik": "^2.4.2",
     "formik-mui": "^5.0.0-alpha.0",
     "moment": "^2.29.4",
-    "mui-datatables": "^4.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.0",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "material-ui-search-bar": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

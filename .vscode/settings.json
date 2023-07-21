@@ -137,10 +137,10 @@
       {
         "name": "component tags",
         "scope": [
-            "support.class.component", // JSX/TSX Component tags
+          "support.class.component" // JSX/TSX Component tags
         ],
         "settings": {
-            "foreground": "#20ce29",
+          "foreground": "#20ce29"
         }
       },
       {

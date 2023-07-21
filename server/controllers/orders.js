@@ -137,13 +137,24 @@ exports.orderAdd = async (req, res) => {
 };
 
 exports.orderDelete = async (req, res) => {
+  filter = { _id: req.body.orCustomerId };
+  updateData = {
+    _id: req.body.orId,
+  };
   try {
-    await dbFindByIdAndDelete(OrderSchema, req.params.id);
-    res.status(200).json({ message: "Sipariş Silindi" });
-  } catch (error) {
-    res.status(500).json({
-      message: "Sipariş Silinemedi, Server Bağlantı Hatası",
+    await dbFindByIdAndUpdate(CustomerSchema, filter, {
+      $pull: { orders: updateData },
     });
+    try {
+      await dbFindByIdAndDelete(OrderSchema, req.body.orId);
+      res.status(200).json({ message: "Sipariş Silindi" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Sipariş Silinemedi, Server Bağlantı Hatası",
+      });
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 

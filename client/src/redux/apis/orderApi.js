@@ -17,15 +17,15 @@ export const orderApi = baseApi.injectEndpoints({
         method: "POST",
         body: postData,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Orders", "Customers"],
     }),
     deleteOrder: builder.mutation({
       query: (body) => ({
         url: `siparis-sil`,
-        method: "DELETE",
+        method: "PUT",
         body,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ["Orders", "Customers"],
     }),
     addProductToOrder: builder.mutation({
       query(body) {

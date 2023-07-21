@@ -70,7 +70,7 @@ const {
 } = require("../controllers/orders");
 router.post("/siparis-ekle", orderAdd);
 router.get("/siparis-sorgula", orderQuery);
-router.delete("/siparis-sil/:id", orderDelete);
+router.put("/siparis-sil", orderDelete);
 router.put("/siparis-urun-ekle", addProductToOrder);
 router.put("/siparis-urun-sil", deleteProductFromOrder);
 
