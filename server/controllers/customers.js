@@ -41,6 +41,7 @@ const cQuery = [
       },
     },
   },
+  { $sort: { createdAt: -1 } },
   {
     $project: {
       _id: 1,
@@ -135,4 +136,3 @@ exports.customerDelete = async (req, res) => {
     });
   }
 };
-

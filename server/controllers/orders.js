@@ -1,6 +1,7 @@
 const CustomerSchema = require("../models/Customer.js");
 const OrderSchema = require("../models/Order.js");
 const ProductSchema = require("../models//Product.js");
+const { productNoReqQuery } = require("./products");
 const {
   dbFindByIdAndDelete,
   dbSave,
@@ -68,6 +69,7 @@ const orQuery = [
       as: "cus",
     },
   },
+  { $sort : { date : -1 } },
   {
     $project: {
       _id: 1,
@@ -165,9 +167,12 @@ exports.addProductToOrder = async (req, res) => {
   };
   try {
     await dbFindByIdAndUpdate(OrderSchema, filter, {
-      $push: { productss: updateData },
+      $push: { products: updateData },
     });
     res.status(200).json({ message: "Sipariş Ürünü Eklendi" });
+    await dbFindByIdAndUpdate(OrderSchema, filter, {
+      $inc: { cost: req.body.productCost },
+    });
   } catch (error) {
     res
       .status(500)
@@ -176,18 +181,27 @@ exports.addProductToOrder = async (req, res) => {
 };
 
 exports.deleteProductFromOrder = async (req, res) => {
+  const productId = req.body.productId;
   filter = { _id: req.body.orderId };
   updateData = {
-    _id: req.body.productId,
+    _id: productId,
   };
   try {
-    await dbFindByIdAndUpdate(OrderSchema, filter, {
-      $pull: { orders: updateData },
-    });
-    res.status(200).json({ message: "Sipariş Ürünü Silindi" });
+    const selectedProduct = await productNoReqQuery(productId);
+    try {
+      await dbFindByIdAndUpdate(OrderSchema, filter, {
+        $pull: { products: updateData },
+      });
+      res.status(200).json({ message: "Sipariş Ürünü Silindi" });
+      await dbFindByIdAndUpdate(OrderSchema, filter, {
+        $inc: { cost: - selectedProduct.totalCost },
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Sipariş Ürünü Silinemedi, Server Bağlantı Hatası" });
+    }
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Sipariş Ürünü Silinemedi, Server Bağlantı Hatası" });
+    console.error(e);
   }
 };

@@ -38,6 +38,9 @@ const CDataTable = () => {
   if (!customers)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
+  if (customers.length < 1)
+    return <PageConnectionWait title="Müşteri Bulunamadı" />;
+
   const filteredData = customers.map((item) => {
     return {
       name: item.name,

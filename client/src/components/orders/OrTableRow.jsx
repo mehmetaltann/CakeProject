@@ -1,6 +1,8 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ProductDataForm from "../UI/dataForms/ProductDataForm";
+import ModalButton from "../UI/ModalButton";
 import { dateFormat } from "../../utils/time-functions";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -37,7 +39,9 @@ const OrTableRow = ({ data }) => {
   } = data;
   const [open, setOpen] = useState(false);
   const [deleteOrder] = useDeleteOrderMutation();
+  const [addProductToOrder] = useAddProductToOrderMutation();
   const [deleteProductFromOrder] = useDeleteProductFromOrderMutation();
+  const [openAddPToOrModal, setOpenAddPToOrModal] = useState(false);
   const dispatch = useDispatch();
   return (
     <Fragment>
@@ -60,15 +64,17 @@ const OrTableRow = ({ data }) => {
         </TableCell>
         <TableCell align="left">{orType}</TableCell>
         <TableCell align="left">{orModel}</TableCell>
-        <TableCell align="left">{`${orPrice.toFixed(2)} TL`}</TableCell>
+        <TableCell
+          align="left"
+          sx={{ color: "secondary.main", fontWeight: 500 }}
+        >{`${orPrice.toFixed(2)} TL`}</TableCell>
         <TableCell align="left">{`${orCost.toFixed(2)} TL`}</TableCell>
-        <TableCell align="left">{`${(orPrice - orCost).toFixed(
-          2
-        )} TL`}</TableCell>
-        <TableCell align="left">{`${(
-          ((orPrice - orCost) / orCost) *
-          100
-        ).toFixed(2)}`}</TableCell>
+        <TableCell align="left" sx={{ color: "success.main", fontWeight: 500 }}>
+          {`${(orPrice - orCost).toFixed(2)} TL`}
+        </TableCell>
+        <TableCell align="left" sx={{ color: "success.main", fontWeight: 600 }}>
+          {`% ${(((orPrice - orCost) / orPrice) * 100).toFixed(2)}`}
+        </TableCell>
         <TableCell align="left">{`${orCustomerName} ${orCustomerSurname}`}</TableCell>
         <TableCell align="left">{orDescription}</TableCell>
         <TableCell align="left">
@@ -145,8 +151,8 @@ const OrTableRow = ({ data }) => {
                           onClick={async () => {
                             try {
                               const res = await deleteProductFromOrder({
-                                orId,
-                                prId,
+                                orderId: orId,
+                                productId: prId,
                               }).unwrap();
                               dispatch(
                                 setSnackbar({
@@ -169,6 +175,26 @@ const OrTableRow = ({ data }) => {
                       </TableCell>
                     </TableRow>
                   ))}
+                  <TableRow>
+                    <TableCell align="right" colSpan={6}>
+                      <ModalButton
+                        height="30vh"
+                        color="primary"
+                        endIconLogo="add"
+                        buttonTitle="Yeni Ürün Ekle"
+                        minW="20vh"
+                        title="Yeni Sipariş Ürünü"
+                        modalOpen={openAddPToOrModal}
+                        setModalOpen={setOpenAddPToOrModal}
+                      >
+                        <ProductDataForm
+                          setOpenModel={setOpenAddPToOrModal}
+                          submitFunction={addProductToOrder}
+                          ObjId={orId}
+                        />
+                      </ModalButton>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>

@@ -39,6 +39,9 @@ const OrDataTable = () => {
   if (!orders)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
+  if (orders.length < 1)
+    return <PageConnectionWait title="Sipariş Bulunamadı" />;
+
   const filteredData = orders?.map((item) => {
     return {
       orId: item.id,

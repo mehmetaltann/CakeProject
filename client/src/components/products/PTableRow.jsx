@@ -28,7 +28,7 @@ import {
   Collapse,
 } from "@mui/material";
 
-const PTableRow = ({ data }) => {
+const PTableRow = ({ data, pIndex }) => {
   const { pId, name, size, description, materials, semiProducts, totalCost } =
     data;
   const [open, setOpen] = useState(false);
@@ -47,8 +47,8 @@ const PTableRow = ({ data }) => {
 
   return (
     <Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }} colSpan={4}>
-        <TableCell align="left">
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell align="left" width="2%">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -58,15 +58,24 @@ const PTableRow = ({ data }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="left">{name}</TableCell>
-        <TableCell align="left">{size}</TableCell>
+        <TableCell align="left" width="2%">
+          {pIndex + 1}
+        </TableCell>
+        <TableCell align="left" width="20%">
+          {name}
+        </TableCell>
+        <TableCell align="left" width="15%">
+          {size}
+        </TableCell>
         <TableCell
           align="left"
           sx={{ color: "secondary.main", fontWeight: 500 }}
         >
           {`${totalCost.toFixed(2)} TL`}
         </TableCell>
-        <TableCell align="left">{description}</TableCell>
+        <TableCell align="left" width="20%">
+          {description}
+        </TableCell>
         <TableCell align="left">
           <IconButton
             size="small"
@@ -113,7 +122,7 @@ const PTableRow = ({ data }) => {
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="materials">
@@ -148,7 +157,7 @@ const PTableRow = ({ data }) => {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell component="th" scope="row" width="2%">
+                        <TableCell component="th" scope="row" width="1%">
                           {index + 1}
                         </TableCell>
                         <TableCell component="th" scope="row" width="20%">
@@ -220,7 +229,7 @@ const PTableRow = ({ data }) => {
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="materials">

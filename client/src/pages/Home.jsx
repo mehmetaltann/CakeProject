@@ -1,9 +1,15 @@
+import HomeCalendar from "../components/homepage/HomeCalendar";
 import { PageWrapper } from "../layouts/Wrappers";
+import { Paper } from "@mui/material";
 
 const Home = () => {
   return (
-    <PageWrapper>Home</PageWrapper>
-  )
-}
+    <PageWrapper>
+      <Paper>
+        <HomeCalendar />
+      </Paper>
+    </PageWrapper>
+  );
+};
 
-export default Home
+export default Home;

@@ -62,11 +62,11 @@ exports.materialUpdate = async (req, res) => {
 
 exports.materialDelete = async (req, res) => {
   const spRes = await dbFindOne(SemiProductSchema, {
-    "materials.mtId": req.params.id,
+    "materials._id": req.params.id,
   });
 
   const pRes = await dbFindOne(ProductSchema, {
-    "materials.mtId": req.params.id,
+    "materials._id": req.params.id,
   });
 
   if (!spRes) {

@@ -73,8 +73,6 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   }
 
   const validateSchema = Yup.object().shape({
-    date: Yup.date().required("Gerekli"),
-    type: Yup.string().required("Gerekli"),
     price: Yup.number()
       .required("Gerekli")
       .moreThan(0, "Sıfırdan Büyük Olmalıdır"),
@@ -132,6 +130,7 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
             />
             <Field name="type" component={FormSelect} label="Pasta türü">
               <MenuItem value="Yazılı Pasta">Yazılı Pasta</MenuItem>
+              <MenuItem value="Krema Sanatı">Krema Sanatı</MenuItem>
               <MenuItem value="Konsept Pasta">Konsept Pasta</MenuItem>
               <MenuItem value="Harf Pasta">Harf Pasta</MenuItem>
               <MenuItem value="Cupcake">Cupcake</MenuItem>

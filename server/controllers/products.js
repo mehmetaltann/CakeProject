@@ -1,6 +1,7 @@
 const ProductSchema = require("../models/Product.js");
+const OrderSchema = require("../models/Order.js");
 const {
-  dbFind,
+  dbFindOne,
   dbFindByIdAndDelete,
   dbSave,
   dbFindByIdAndUpdate,
@@ -216,6 +217,16 @@ exports.productQuery = async (req, res) => {
   }
 };
 
+exports.productNoReqQuery = async (productId) => {
+  try {
+    const data = await dbFindAggregate(ProductSchema, pQuery);
+    const filteredData = data.find((item) => item._id.toString() === productId);
+    return filteredData;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 exports.productAdd = async (req, res) => {
   const { name, size, description } = req.body;
   const product = ProductSchema({
@@ -249,13 +260,23 @@ exports.productUpdate = async (req, res) => {
   }
 };
 exports.productDelete = async (req, res) => {
-  try {
-    await dbFindByIdAndDelete(ProductSchema, req.params.id);
-    res.status(200).json({ message: "Ürün Silindi" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Tarif Silinemedi, Server Bağlantı Hatası" });
+  const oRes = await dbFindOne(OrderSchema, {
+    "products._id": req.params.id,
+  });
+
+  if (!oRes) {
+    try {
+      await dbFindByIdAndDelete(ProductSchema, req.params.id);
+      res.status(200).json({ message: "Ürün Silindi" });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Ürün Silinemedi, Server Bağlantı Hatası" });
+    }
+  } else {
+    res.status(200).json({
+      message: "Ürün Silinemedi, Bu ürün bir siparişte kullanılmaktadır.",
+    });
   }
 };
 

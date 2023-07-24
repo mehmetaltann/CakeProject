@@ -116,7 +116,7 @@ exports.semiProductUpdate = async (req, res) => {
 
 exports.semiProductDelete = async (req, res) => {
   const pRes = await dbFindOne(ProductSchema, {
-    "semiproducts.spId": req.params.id,
+    "semiproducts._id": req.params.id,
   });
 
   if (!pRes) {

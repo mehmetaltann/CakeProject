@@ -25,7 +25,7 @@ import {
   Collapse,
 } from "@mui/material";
 
-const SpTableRow = ({ data }) => {
+const SpTableRow = ({ data, spIndex }) => {
   const { spId, name, description, materials } = data;
   const [open, setOpen] = useState(false);
   const [openAddMtToSpModal, setOpenAddMtToSpModal] = useState(false);
@@ -45,7 +45,7 @@ const SpTableRow = ({ data }) => {
   return (
     <Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell align="left" width="5%">
+        <TableCell align="left" width="3%">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -55,12 +55,20 @@ const SpTableRow = ({ data }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="left">{name}</TableCell>
+        <TableCell component="th" scope="row" width="3%">
+          {spIndex + 1}
+        </TableCell>
+        <TableCell align="left" width="25%">
+          {name}
+        </TableCell>
         <TableCell
           align="left"
           sx={{ color: "secondary.main", fontWeight: 500 }}
+          width="15%"
         >{`${spTotalCost} TL`}</TableCell>
-        <TableCell align="left">{description}</TableCell>
+        <TableCell align="left" width="20%">
+          {description}
+        </TableCell>
         <TableCell align="left">
           <IconButton
             size="small"
@@ -115,7 +123,7 @@ const SpTableRow = ({ data }) => {
                     <TableCell align="left" width="1%">
                       No
                     </TableCell>
-                    <TableCell align="left" width="18%">
+                    <TableCell align="left" width="12%">
                       İsim
                     </TableCell>
                     <TableCell align="left">Miktar</TableCell>
@@ -138,7 +146,7 @@ const SpTableRow = ({ data }) => {
                         <TableCell component="th" scope="row" width="1%">
                           {index + 1}
                         </TableCell>
-                        <TableCell component="th" scope="row" width="18%">
+                        <TableCell component="th" scope="row" width="12%">
                           {mtName}
                         </TableCell>
                         <TableCell width="3%">{mtAmount}</TableCell>

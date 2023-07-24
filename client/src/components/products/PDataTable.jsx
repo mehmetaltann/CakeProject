@@ -38,7 +38,10 @@ const PDataTable = () => {
   if (!products)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
-  const filteredData = products.map((item) => {
+  if (products.length < 1)
+    return <PageConnectionWait title="Ürün Bulunamadı" />;
+
+  const filteredData = products?.map((item) => {
     return {
       name: item.name,
       size: item.size,
@@ -101,6 +104,7 @@ const PDataTable = () => {
           <TableHead>
             <TableRow>
               <TableCell align="left"></TableCell>
+              <TableCell align="left">No</TableCell>
               <TableCell align="left" key="name">
                 <TableSortLabel
                   active={valueToOrderBy === "name"}
@@ -131,8 +135,8 @@ const PDataTable = () => {
                   page * rowsPerPage + rowsPerPage
                 )
               : lastFilteredData
-            ).map((item) => (
-              <PTableRow data={item} key={item.pId} />
+            ).map((item, index) => (
+              <PTableRow data={item} key={index} pIndex={index} />
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

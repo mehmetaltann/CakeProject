@@ -12,13 +12,13 @@ const CForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   async function submitHandler(values) {
     const newRecord = {
       name: values.name,
-      surname: values.surname,
+      surname: values.surname.toUpperCase(),
       phonenumber: values.phonenumber,
       description: values.description,
       id: objId,
     };
     try {
-      console.log(newRecord)
+      console.log(newRecord);
       const res = await submitFunction(newRecord).unwrap();
       setOpenModel(false);
       dispatch(

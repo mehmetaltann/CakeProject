@@ -42,6 +42,9 @@ export default function SpDataTable() {
   if (!semiProducts)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
+  if (semiProducts.length < 1)
+    return <PageConnectionWait title="Tarif Bulunamadı" />;
+
   const filteredData = semiProducts.map((item) => {
     return {
       name: item.name,
@@ -94,6 +97,7 @@ export default function SpDataTable() {
           <TableHead>
             <TableRow>
               <TableCell align="left"></TableCell>
+              <TableCell align="left">No</TableCell>
               <TableCell align="left" key="name">
                 <TableSortLabel
                   active={valueToOrderBy === "name"}
@@ -125,8 +129,8 @@ export default function SpDataTable() {
                   page * rowsPerPage + rowsPerPage
                 )
               : lastFilteredData
-            ).map((item) => (
-              <SpTableRow data={item} key={item.spId} />
+            ).map((item, index) => (
+              <SpTableRow data={item} key={index} spIndex={index} />
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
