@@ -1,10 +1,11 @@
-import { Fragment, useState } from "react";
-import { getComparator, sortedFilteredData } from "../../utils/sort-functions";
-import { useGetOrdersQuery } from "../../redux/apis/orderApi";
 import { TableCell, TableRow, TableSortLabel } from "@mui/material";
 
-const OrDataTableHeader = ({valueToOrderBy,orderDirection,setValueToOrderBy,setOrderDirection}) => {
-
+const OrDataTableHeader = ({
+  valueToOrderBy,
+  orderDirection,
+  setValueToOrderBy,
+  setOrderDirection,
+}) => {
   const createSortHandler = (property) => (event) => {
     const isAscending = valueToOrderBy === property && orderDirection === "asc";
     setValueToOrderBy(property);
@@ -14,6 +15,17 @@ const OrDataTableHeader = ({valueToOrderBy,orderDirection,setValueToOrderBy,setO
   return (
     <TableRow>
       <TableCell align="left"></TableCell>
+      <TableCell align="left" key="orCustomerName">
+        <TableSortLabel
+          active={valueToOrderBy === "orCustomerName"}
+          direction={
+            valueToOrderBy === "orCustomerName" ? orderDirection : "asc"
+          }
+          onClick={createSortHandler("orCustomerName")}
+        >
+          Müşteri
+        </TableSortLabel>
+      </TableCell>
       <TableCell align="left" key="orDate">
         <TableSortLabel
           active={valueToOrderBy === "orDate"}
@@ -60,20 +72,9 @@ const OrDataTableHeader = ({valueToOrderBy,orderDirection,setValueToOrderBy,setO
         </TableSortLabel>
       </TableCell>
       <TableCell align="left">Kar</TableCell>
-      <TableCell align="left">Kar Yüzdesi</TableCell>
-      <TableCell align="left" key="orCustomerName">
-        <TableSortLabel
-          active={valueToOrderBy === "orCustomerName"}
-          direction={
-            valueToOrderBy === "orCustomerName" ? orderDirection : "asc"
-          }
-          onClick={createSortHandler("orCustomerName")}
-        >
-          Müşteri
-        </TableSortLabel>
-      </TableCell>
+      <TableCell align="left">Kar Oranı</TableCell>
       <TableCell align="left">Notlar</TableCell>
-      <TableCell align="left">Sil / Güncelle</TableCell>
+      <TableCell align="left">Sil</TableCell>
     </TableRow>
   );
 };

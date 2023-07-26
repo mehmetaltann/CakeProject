@@ -190,7 +190,11 @@ const SpTableRow = ({ data, spIndex }) => {
                     )
                   )}
                   <TableRow>
-                    <TableCell align="right" colSpan={6}>
+                    <TableCell
+                      align="right"
+                      colSpan={6}
+                      style={{ borderBottom: "none" }}
+                    >
                       <ModalButton
                         height="30vh"
                         color="primary"

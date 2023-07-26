@@ -12,7 +12,7 @@ const Orders = () => {
   const [addOrder] = useAddOrderMutation();
 
   return (
-    <PageWrapper maxWidth="lg">
+    <PageWrapper maxWidth="xl">
       <Stack spacing={2}>
         <PageFormContainer
           modalOpen={openOrAddModal}

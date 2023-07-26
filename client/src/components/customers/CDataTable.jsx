@@ -29,7 +29,7 @@ const CDataTable = () => {
   const [valueToOrderBy, setValueToOrderBy] = useState("");
   //for pagination
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const { data: customers, isLoading, isFetching } = useGetCustomersQuery();
 
   if (isLoading && isFetching)
@@ -48,6 +48,7 @@ const CDataTable = () => {
       description: item.description,
       phonenumber: item.phonenumber,
       cId: item.id,
+      ordersCount: item.orders?.length ? item.orders.length : 0,
       orders: item.orders?.map((or) => {
         return {
           orId: or.id,
@@ -93,7 +94,11 @@ const CDataTable = () => {
   return (
     <Fragment>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
+        <Table
+          sx={{ minWidth: 650, borderBottom: "none" }}
+          aria-label="simple table"
+          size="small"
+        >
           <TableHead>
             <TableRow>
               <TableCell align="left"></TableCell>
@@ -118,6 +123,17 @@ const CDataTable = () => {
                 </TableSortLabel>
               </TableCell>
               <TableCell align="left">Telefon</TableCell>
+              <TableCell align="left" key="ordersCount">
+                <TableSortLabel
+                  active={valueToOrderBy === "ordersCount"}
+                  direction={
+                    valueToOrderBy === "ordersCount" ? orderDirection : "asc"
+                  }
+                  onClick={createSortHandler("ordersCount")}
+                >
+                  Sipariş Sayısı
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="left">Notlar</TableCell>
               <TableCell align="left">Sil / Güncelle</TableCell>
             </TableRow>
@@ -142,7 +158,7 @@ const CDataTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        rowsPerPageOptions={[12, 25, 50, { label: "All", value: -1 }]}
         colSpan={3}
         count={filteredData.length}
         rowsPerPage={rowsPerPage}

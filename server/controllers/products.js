@@ -152,6 +152,10 @@ const pQuery = [
                 input: "$$s.materials",
                 as: "sm",
                 in: {
+                  id: "$$sm._id",
+                  name: "$$sm.name",
+                  unit: "$$sm.unit",
+                  mtNumber: "$$sm.mtNumber",
                   cost: {
                     $multiply: [
                       { $divide: ["$$sm.price", "$$sm.amount"] },
@@ -177,6 +181,7 @@ const pQuery = [
             id: "$$s.id",
             name: "$$s.name",
             description: "$$s.description",
+            materials: "$$s.materials",
             materialcost: {
               $multiply: [{ $sum: "$$s.materials.cost" }, "$$s.spNumber"],
             },
@@ -191,6 +196,7 @@ const pQuery = [
       deneme: 1,
       name: 1,
       size: 1,
+      spNumber: 1,
       description: 1,
       materials: 1,
       semiproducts: 1,

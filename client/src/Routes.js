@@ -7,6 +7,8 @@ import SemiProducts from "./pages/SemiProducts";
 import NavBar from "./layouts/NavBar";
 import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
+import Parameters from "./pages/Parameters";
+import Statistics from "./pages/Statistics";
 import {
   BrowserRouter,
   Routes,
@@ -37,14 +39,22 @@ const routes = [
     component: SemiProducts,
   },
   {
+    path: "/parametreler",
+    component: Parameters,
+  },
+  {
     path: "/malzemeler",
     component: Materials,
+  },
+  {
+    path: "/istatistikler",
+    component: Statistics,
   },
 ];
 
 export const Rotalar = () => {
-  // const user = localStorage.getItem("token");
-  const user = "hep var";
+  const user = localStorage.getItem("token");
+  //const user = "hep var";
   return (
     <BrowserRouter>
       <Routes>

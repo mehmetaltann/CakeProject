@@ -8,6 +8,7 @@ import ModalIconButton from "../UI/ModalIconButton";
 import PForm from "./PForm";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
+import { tableCellClasses } from "@mui/material/TableCell";
 import {
   useUpdateProductMutation,
   useDeleteProductMutation,
@@ -202,7 +203,11 @@ const PTableRow = ({ data, pIndex }) => {
                     )
                   )}
                   <TableRow>
-                    <TableCell align="right" colSpan={6}>
+                    <TableCell
+                      align="right"
+                      colSpan={6}
+                      style={{ borderBottom: "none" }}
+                    >
                       <ModalButton
                         height="30vh"
                         color="primary"
@@ -229,19 +234,17 @@ const PTableRow = ({ data, pIndex }) => {
       </TableRow>
 
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: "none" }}
+          colSpan={5}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Table size="small" aria-label="materials">
                 <TableBody>
                   {materials?.map(
                     ({ mtId, mtName, mtCost, mtUnit, mtAmount }, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
+                      <TableRow key={index}>
                         <TableCell component="th" scope="row" width="2%">
                           {index + 1}
                         </TableCell>
@@ -287,7 +290,11 @@ const PTableRow = ({ data, pIndex }) => {
                     )
                   )}
                   <TableRow>
-                    <TableCell align="right" colSpan={6}>
+                    <TableCell
+                      align="right"
+                      colSpan={6}
+                      style={{ borderBottom: "none" }}
+                    >
                       <ModalButton
                         height="30vh"
                         color="primary"

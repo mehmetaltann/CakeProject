@@ -1,14 +1,28 @@
 import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../UI/form/FormTextField";
 import FormSelect from "../UI/form/FormSelect";
+import PageConnectionWait from "../UI/PageConnectionWait";
 import * as Yup from "yup";
 import { Stack, Button, MenuItem } from "@mui/material";
 import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
+import { useGetParametersQuery } from "../../redux/apis/parameterApi.js";
 
 const PForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
+  const {
+    data: parameters,
+    isLoading: parametersLoading,
+    isFetching: parametersFetching,
+  } = useGetParametersQuery();
+
   const dispatch = useDispatch();
+
+  if (parametersLoading && parametersFetching)
+    return <PageConnectionWait title="Veriler Bekleniyor" />;
+
+  if (!parameters)
+    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
   const validateSchema = Yup.object().shape({
     name: Yup.string().required("Gerekli").min(2, "En az 2 Karakter"),
@@ -57,12 +71,13 @@ const PForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
               size="small"
             />
             <Field name="size" component={FormSelect} label="Boyut">
-              <MenuItem value="4-8 Kişilik">4-8 Kişilik</MenuItem>
-              <MenuItem value="8-12 Kişilik">8-12 Kişilik</MenuItem>
-              <MenuItem value="12-16 Kişilik">12-16 Kişilik</MenuItem>
-              <MenuItem value="16-20 Kişilik">16-20 Kişilik</MenuItem>
-              <MenuItem value="20-25 Kişilik">20-25 Kişilik</MenuItem>
-              <MenuItem value="25-30 Kişilik">25-30 Kişilik</MenuItem>
+              {parameters
+                .filter((item) => item.variant === "Pasta Boyutu")[0]
+                .content?.map(({ title, id }, index) => (
+                  <MenuItem value={title} key={index}>
+                    {title}
+                  </MenuItem>
+                ))}
             </Field>
             <FormTextField
               sx={{ width: "100%" }}

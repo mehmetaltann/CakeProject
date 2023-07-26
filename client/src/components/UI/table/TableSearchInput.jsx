@@ -25,6 +25,7 @@ const TableSearchInput = () => {
       <Stack direction="row" spacing={1} alignItems="center">
         <SearchIcon fontSize="large" color="secondary" />
         <TextField
+          type="search"
           color="secondary"
           id="outlined-basic"
           label="Arama"

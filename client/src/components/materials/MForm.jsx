@@ -2,14 +2,27 @@ import SendIcon from "@mui/icons-material/Send";
 import FormTextField from "../UI/form/FormTextField";
 import FormSelect from "../UI/form/FormSelect";
 import FormDatePicker from "../UI/form/FormDatePicker";
+import PageConnectionWait from "../UI/PageConnectionWait";
 import * as Yup from "yup";
 import { Stack, MenuItem, Button } from "@mui/material";
 import { Form, Formik, Field } from "formik";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
+import { useGetParametersQuery } from "../../redux/apis/parameterApi.js";
 
 const MForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
+  const {
+    data: parameters,
+    isLoading: parametersLoading,
+    isFetching: parametersFetching,
+  } = useGetParametersQuery();
   const dispatch = useDispatch();
+
+  if (parametersLoading && parametersFetching)
+    return <PageConnectionWait title="Veriler Bekleniyor" />;
+
+  if (!parameters)
+    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
   async function submitHandler(values) {
     const newRecord = {
@@ -69,9 +82,13 @@ const MForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
               size="small"
             />
             <Field name="type" component={FormSelect} label="Tür">
-              <MenuItem value="Gıda">Gıda</MenuItem>
-              <MenuItem value="Ambalaj">Ambalaj</MenuItem>
-              <MenuItem value="Diğer">Diğer</MenuItem>
+              {parameters
+                .filter((item) => item.variant === "Malzeme Türü")[0]
+                .content?.map(({ title, id }, index) => (
+                  <MenuItem value={title} key={index}>
+                    {title}
+                  </MenuItem>
+                ))}
             </Field>
             <FormTextField
               sx={{ width: "100%" }}
@@ -81,11 +98,13 @@ const MForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
               size="small"
             />
             <Field name="unit" component={FormSelect} label="Birim">
-              <MenuItem value="Gram">Gram</MenuItem>
-              <MenuItem value="Adet">Adet</MenuItem>
-              <MenuItem value="MiliLitre">MiliLitre</MenuItem>
-              <MenuItem value="Dakika">Dakika</MenuItem>
-              <MenuItem value="Santimetre">Santimetre</MenuItem>
+              {parameters
+                .filter((item) => item.variant === "Malzeme Birim")[0]
+                .content?.map(({ title, id }, index) => (
+                  <MenuItem value={title} key={index}>
+                    {title}
+                  </MenuItem>
+                ))}
             </Field>
             <FormTextField
               sx={{ width: "100%" }}

@@ -12,7 +12,7 @@ const PageFormContainer = ({
   return (
     <Paper>
       <Stack
-        direction={{ md: "row" }}
+        direction={{ sm: "row" }}
         justifyContent="space-between"
         alignItems={{ md: "center" }}
         spacing={{ xs: 2, md: 0 }}

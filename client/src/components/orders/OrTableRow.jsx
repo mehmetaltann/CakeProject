@@ -46,7 +46,7 @@ const OrTableRow = ({ data }) => {
   return (
     <Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell align="left" width="5%">
+        <TableCell align="left" width="1%">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -58,26 +58,49 @@ const OrTableRow = ({ data }) => {
         </TableCell>
         <TableCell
           align="left"
+          width="15%"
+          sx={{ fontWeight: 500 }}
+        >{`${orCustomerName} ${orCustomerSurname}`}</TableCell>
+        <TableCell
+          align="left"
+          width="7%"
           sx={{ color: "secondary.main", fontWeight: 500 }}
         >
           {dateFormat(orDate)}
         </TableCell>
-        <TableCell align="left">{orType}</TableCell>
-        <TableCell align="left">{orModel}</TableCell>
+        <TableCell align="left" width="12%">
+          {orType}
+        </TableCell>
+        <TableCell align="left" width="12%">
+          {orModel}
+        </TableCell>
         <TableCell
           align="left"
+          width="10%"
           sx={{ color: "secondary.main", fontWeight: 500 }}
         >{`${orPrice.toFixed(2)} TL`}</TableCell>
-        <TableCell align="left">{`${orCost.toFixed(2)} TL`}</TableCell>
-        <TableCell align="left" sx={{ color: "success.main", fontWeight: 500 }}>
+        <TableCell align="left" width="10%">{`${orCost.toFixed(
+          2
+        )} TL`}</TableCell>
+        <TableCell
+          align="left"
+          width="10%"
+          sx={{ color: "success.main", fontWeight: 500 }}
+        >
           {`${(orPrice - orCost).toFixed(2)} TL`}
         </TableCell>
-        <TableCell align="left" sx={{ color: "success.main", fontWeight: 600 }}>
+        <TableCell
+          align="left"
+          width="10%"
+          sx={{ color: "success.main", fontWeight: 600 }}
+        >
           {`% ${(((orPrice - orCost) / orPrice) * 100).toFixed(2)}`}
         </TableCell>
-        <TableCell align="left">{`${orCustomerName} ${orCustomerSurname}`}</TableCell>
-        <TableCell align="left">{orDescription}</TableCell>
-        <TableCell align="left">
+
+        <TableCell align="left" width="10%">
+          {orDescription}
+        </TableCell>
+        <TableCell align="left" width="2%">
           <IconButton
             size="small"
             color="secondary"
@@ -176,7 +199,11 @@ const OrTableRow = ({ data }) => {
                     </TableRow>
                   ))}
                   <TableRow>
-                    <TableCell align="right" colSpan={6}>
+                    <TableCell
+                      align="right"
+                      colSpan={6}
+                      style={{ borderBottom: "none" }}
+                    >
                       <ModalButton
                         height="30vh"
                         color="primary"

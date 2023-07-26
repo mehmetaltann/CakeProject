@@ -22,7 +22,6 @@ const HomeCalendar = () => {
         " - " +
         `${item.type} - ${item.price.toFixed(2)} TL`,
       start: item.date,
-      backgroundColor: "#ba68c8",
       description: `${item.type} ${item.price}`,
       allDay: "true",
     };

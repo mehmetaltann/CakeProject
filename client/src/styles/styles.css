@@ -1,16 +1,22 @@
 :root {
+  --fc-small-font-size: 0.85em;
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-neutral-text-color: #808080;
+  --fc-border-color: #ddd;
+
   --fc-button-text-color: #fff;
-  --fc-button-bg-color: #ba68c8;
+  --fc-button-bg-color: #4d455d;
   --fc-button-border-color: #fff;
-  --fc-button-hover-bg-color: #9c27b0;
+  --fc-button-hover-bg-color: #e96479;
   --fc-button-hover-border-color: #fff;
-  --fc-button-active-bg-color: #9c27b0;
+  --fc-button-active-bg-color: #e96479;
   --fc-button-active-border-color: #fff;
 
-  --fc-event-bg-color: #ba68c8;
-  --fc-event-border-color: #ba68c8;
+  --fc-event-bg-color: #4d455d;
+  --fc-event-border-color: #4d455d;
   --fc-event-text-color: #fff;
-  --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+  --fc-event-selected-overlay-color: #4d455d;
 
   --fc-non-business-color: rgba(215, 215, 215, 0.3);
   --fc-bg-event-color: rgb(143, 223, 130);

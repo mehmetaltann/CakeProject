@@ -74,4 +74,23 @@ router.put("/siparis-sil", orderDelete);
 router.put("/siparis-urun-ekle", addProductToOrder);
 router.put("/siparis-urun-sil", deleteProductFromOrder);
 
+//Parameters
+const {
+  parameterQuery,
+  parameterAdd,
+  parameterDelete,
+  parameterContentAdd,
+  parameterContentDelete,
+} = require("../controllers/parameter");
+router.get("/parametre-sorgula", parameterQuery);
+router.post("/parametre-ekle", parameterAdd);
+router.put("/parametre-icerik-ekle", parameterContentAdd);
+router.put("/parametre-icerik-sil", parameterContentDelete);
+router.delete("/parametre-sil/:id", parameterDelete);
+
+//User ve Auth
+const { postUser, authUser } = require("../controllers/user");
+router.post("/postUser", postUser);
+router.post("/authUser", authUser);
+
 module.exports = router;

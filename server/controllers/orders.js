@@ -69,7 +69,7 @@ const orQuery = [
       as: "cus",
     },
   },
-  { $sort : { date : -1 } },
+  { $sort: { date: -1 } },
   {
     $project: {
       _id: 1,
@@ -90,6 +90,7 @@ const orQuery = [
             id: "$$p._id",
             name: "$$p.name",
             size: "$$p.size",
+            materials: "$$p.materials",
           },
         },
       },
@@ -194,7 +195,7 @@ exports.deleteProductFromOrder = async (req, res) => {
       });
       res.status(200).json({ message: "Sipariş Ürünü Silindi" });
       await dbFindByIdAndUpdate(OrderSchema, filter, {
-        $inc: { cost: - selectedProduct.totalCost },
+        $inc: { cost: -selectedProduct.totalCost },
       });
     } catch (error) {
       res

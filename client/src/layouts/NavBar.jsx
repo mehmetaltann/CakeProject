@@ -178,7 +178,31 @@ const NavBar = () => {
               onClose={() => {
                 setAnchorElUser(null);
               }}
-            ></Menu>
+            >
+              <MenuItem
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                  window.location.reload();
+                }}
+              >
+                <Typography textAlign="center">Çıkış Yap</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/parametreler");
+                }}
+              >
+                <Typography textAlign="center">Parametreler</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/istatistikler");
+                }}
+              >
+                <Typography textAlign="center">İstatistikler</Typography>
+              </MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </Container>

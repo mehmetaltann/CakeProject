@@ -29,7 +29,7 @@ export default function SpDataTable() {
   const [valueToOrderBy, setValueToOrderBy] = useState("");
   //for pagination
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const {
     data: semiProducts,
     isLoading,
@@ -141,7 +141,7 @@ export default function SpDataTable() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+        rowsPerPageOptions={[12, 25, 50, { label: "All", value: -1 }]}
         colSpan={3}
         count={filteredData.length}
         rowsPerPage={rowsPerPage}

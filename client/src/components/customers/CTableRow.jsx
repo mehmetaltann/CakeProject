@@ -7,6 +7,7 @@ import { dateFormat } from "../../utils/time-functions";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
+import { tableCellClasses } from "@mui/material/TableCell";
 import {
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
@@ -24,7 +25,8 @@ import {
 } from "@mui/material";
 
 const CTableRow = ({ data }) => {
-  const { name, surname, description, phonenumber, cId, orders } = data;
+  const { name, surname, description, phonenumber, cId, orders, ordersCount } =
+    data;
   const [open, setOpen] = useState(false);
   const [openEditCModal, setOpenEditCModal] = useState(false);
   const [updateCustomer] = useUpdateCustomerMutation();
@@ -56,6 +58,7 @@ const CTableRow = ({ data }) => {
           {surname}
         </TableCell>
         <TableCell align="left">{phonenumber}</TableCell>
+        <TableCell align="left">{ordersCount}</TableCell>
         <TableCell align="left">{description}</TableCell>
         <TableCell align="left">
           <IconButton
@@ -86,7 +89,7 @@ const CTableRow = ({ data }) => {
             height={{ md: "40vh" }}
             modalOpen={openEditCModal}
             setModalOpen={setOpenEditCModal}
-            title="Müşter, Güncelle"
+            title="Müşteri Güncelle"
           >
             <CForm
               setOpenModel={setOpenEditCModal}
@@ -173,14 +176,14 @@ const CTableRow = ({ data }) => {
                         <TableCell width="10%">
                           {`${(orPrice - orCost).toFixed(2)} TL`}
                         </TableCell>
-                        <TableCell width="10%">
+                        <TableCell width="10%" style={{ borderBottom: "none" }}>
                           <Typography
                             variant="body2"
                             color="success.main"
                             fontWeight="600"
-                          >{`${(((orPrice - orCost) / orCost) * 100).toFixed(
+                          >{`% ${(((orPrice - orCost) / orPrice) * 100).toFixed(
                             2
-                          )} TL`}</Typography>
+                          )}`}</Typography>
                         </TableCell>
                       </TableRow>
                     )

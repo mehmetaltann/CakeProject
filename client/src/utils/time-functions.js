@@ -4,8 +4,24 @@ export const dateFormat = (date) => {
   return moment(date).format("DD.MM.YYYY");
 };
 
+export const thisMonth = moment().month() + 1;
+
+export const thisYear = moment().year();
+
 export const dateFormatNormal = (date) => {
   return moment(date).format();
+};
+
+export const generateArrayOfYears = (historicalYear) => {
+  var max = thisYear;
+  var fark = thisYear - historicalYear;
+  var min = max - fark;
+  var years = [];
+
+  for (var i = max; i >= min; i--) {
+    years.push(i);
+  }
+  return years;
 };
 
 const dateNow = new Date(); // Creating a new date object with the current date and time

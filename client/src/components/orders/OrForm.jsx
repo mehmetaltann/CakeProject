@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
 import { useGetCustomersQuery } from "../../redux/apis/customerApi";
 import { useGetProductsQuery } from "../../redux/apis/productApi";
+import { useGetParametersQuery } from "../../redux/apis/parameterApi.js";
 
 const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   const {
@@ -24,6 +25,12 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
     isLoading: productLoading,
     isFetching: productFetching,
   } = useGetProductsQuery();
+
+  const {
+    data: parameters,
+    isLoading: parametersLoading,
+    isFetching: parametersFetching,
+  } = useGetParametersQuery();
 
   const dispatch = useDispatch();
 
@@ -39,6 +46,12 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
   if (!products)
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
+  if (parametersLoading && parametersFetching)
+    return <PageConnectionWait title="Veriler Bekleniyor" />;
+
+  if (!parameters)
+    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
+
   async function submitHandler(values) {
     const pickedProduct = products.find(
       (item) => item.id === values.product.id
@@ -50,7 +63,7 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
       type: values.type,
       model: values.model,
       price: values.price,
-      desription: values.desription,
+      desription: values.description,
       cost: pickedProduct.totalCost,
     };
     try {
@@ -129,12 +142,13 @@ const OrForm = ({ setOpenModel, initialValues, submitFunction, objId }) => {
               )}
             />
             <Field name="type" component={FormSelect} label="Pasta türü">
-              <MenuItem value="Yazılı Pasta">Yazılı Pasta</MenuItem>
-              <MenuItem value="Krema Sanatı">Krema Sanatı</MenuItem>
-              <MenuItem value="Konsept Pasta">Konsept Pasta</MenuItem>
-              <MenuItem value="Harf Pasta">Harf Pasta</MenuItem>
-              <MenuItem value="Cupcake">Cupcake</MenuItem>
-              <MenuItem value="Hediye Kutusu">Hediye Kutusu</MenuItem>
+              {parameters
+                .filter((item) => item.variant === "Pasta Türü")[0]
+                .content?.map(({ title, id }, index) => (
+                  <MenuItem value={title} key={index}>
+                    {title}
+                  </MenuItem>
+                ))}
             </Field>
             <FormTextField
               sx={{ width: "100%" }}
