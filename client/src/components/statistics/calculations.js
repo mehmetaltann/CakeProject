@@ -51,7 +51,7 @@ export default function statisticsCalc(data, monthNumber, productData) {
 
   let dataList = [];
   productList.map((item) => {
-    item.product.map((pr) => {
+    return item.product.map((pr) => {
       dataList.push({
         id: pr.productId,
         name: pr.productName,
@@ -59,16 +59,16 @@ export default function statisticsCalc(data, monthNumber, productData) {
         cost: pr.productTotalCost,
         materials: pr.productAllMaterials,
       });
+      return dataList;
     });
-    return dataList;
   });
 
   let allMaterialHere = [];
   dataList.map((item) => {
-    item.materials.map((mt) => {
+    return item.materials.map((mt) => {
       allMaterialHere.push(mt);
+      return allMaterialHere;
     });
-    return allMaterialHere;
   });
 
   const allMaterialsListReducer = allMaterialHere.reduce(
@@ -100,6 +100,7 @@ export default function statisticsCalc(data, monthNumber, productData) {
 
   const allUsedMaterials = Object.values(allMaterialsListReducer);
   const cakeTypeCount = Object.values(cakeTypeCountListReducer);
+  const totalCakeCount = cakeTypeCount.reduce((n, { count }) => n + count, 0);
   const totalIncome = data.reduce((n, { price }) => n + price, 0);
   const averageIncome = totalIncome / monthNumber;
   const totalCost = dataList.reduce((n, { cost }) => n + cost, 0);
@@ -110,6 +111,7 @@ export default function statisticsCalc(data, monthNumber, productData) {
   return {
     allUsedMaterials,
     cakeTypeCount,
+    totalCakeCount,
     totalIncome,
     averageIncome,
     totalCost,

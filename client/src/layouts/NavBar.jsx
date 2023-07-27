@@ -1,5 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import CakeIcon from "@mui/icons-material/Cake";
+import profile from "../assets/img/profile.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setSearchQuery } from "../redux/slices/generalSlice";
@@ -158,7 +159,7 @@ const NavBar = () => {
               }}
               sx={{ p: 0 }}
             >
-              <Avatar alt="Mehmet Altan" />
+              <Avatar alt="Mehmet Altan" src={profile}/>
             </IconButton>
 
             <Menu

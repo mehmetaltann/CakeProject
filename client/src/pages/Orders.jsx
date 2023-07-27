@@ -18,7 +18,7 @@ const Orders = () => {
           modalOpen={openOrAddModal}
           setModalOpen={setOpenOrAddModal}
           title="Yeni Sipariş"
-          modalHeight="40vh"
+          modalHeight="50vh"
         >
           <OrForm
             setOpenModel={setOpenOrAddModal}

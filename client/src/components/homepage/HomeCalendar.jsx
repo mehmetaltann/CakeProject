@@ -1,19 +1,10 @@
 import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import PageConnectionWait from "../UI/PageConnectionWait";
 import trLocale from "@fullcalendar/core/locales/tr";
-import { useGetOrdersQuery } from "../../redux/apis/orderApi";
 
-const HomeCalendar = () => {
-  const { data: orders, isLoading, isFetching } = useGetOrdersQuery();
 
-  if (isLoading && isFetching)
-    return <PageConnectionWait title="Veriler Bekleniyor" />;
-
-  if (!orders)
-    return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
-
+const HomeCalendar = ({ orders }) => {
   const eventData = orders?.map((item) => {
     return {
       id: item.id,
@@ -42,6 +33,7 @@ const HomeCalendar = () => {
       locale="tr"
       events={eventData}
       firstDay="1"
+      eventColor="secondary"
     />
   );
 };

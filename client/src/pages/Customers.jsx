@@ -17,7 +17,7 @@ const Customers = () => {
           modalOpen={openCAddModal}
           setModalOpen={setOpenCAddModal}
           title="Yeni Müşteri"
-          modalHeight="30vh"
+          modalHeight="40vh"
         >
           <CForm
             setOpenModel={setOpenCAddModal}

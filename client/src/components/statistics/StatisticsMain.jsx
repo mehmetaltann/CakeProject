@@ -116,7 +116,6 @@ const StatisticsMain = () => {
       target: { value },
     } = event;
     setYears(
-      // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
   }

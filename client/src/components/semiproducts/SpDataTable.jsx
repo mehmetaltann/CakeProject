@@ -55,6 +55,7 @@ export default function SpDataTable() {
         return {
           mtId: mat.id,
           mtName: mat.name,
+          mtAmount: mat.amount,
           mtCost: mat.cost,
           mtUnit: mat.unit,
         };

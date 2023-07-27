@@ -1,5 +1,6 @@
 import SendIcon from "@mui/icons-material/Send";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+
 import { Button, Modal, Box, Typography, Divider } from "@mui/material";
 import { Fragment } from "react";
 
@@ -15,6 +16,7 @@ const ModalButton = ({
   variant = "outlined",
   modalOpen,
   setModalOpen,
+  icon,
   size = "small",
 }) => {
   const modalStyle = {
@@ -37,6 +39,7 @@ const ModalButton = ({
         color={color}
         size={size}
         variant={variant}
+        startIcon={icon}
         endIcon={endIconLogo === "send" ? <SendIcon /> : <PlaylistAddIcon />}
         sx={{ minWidth: minW, maxWidth: maxW }}
         onClick={() => setModalOpen(true)}

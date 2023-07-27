@@ -50,6 +50,7 @@ const spQuery = [
             id: "$$m._id",
             name: "$$m.name",
             unit: "$$m.unit",
+            amount: "$$m.mtNumber",
             cost: {
               $multiply: [
                 { $divide: ["$$m.price", "$$m.amount"] },
