@@ -15,7 +15,7 @@
     "nodemon": "^2.0.21"
   },
   "scripts": {
-    "build": "nmp run build"
+    "build": "nmp install"
     "start": "nodemon server.js"
   },
   "author": "Mehmet Altan",
