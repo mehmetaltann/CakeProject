@@ -196,6 +196,13 @@ const NavBar = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  navigate("/register");
+                }}
+              >
+                <Typography textAlign="center">Kullanıcı Kayıt</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
                   localStorage.removeItem("token");
                   navigate("/");
                   window.location.reload();
