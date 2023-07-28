@@ -25,8 +25,8 @@ const monthsTransform = {
 };
 
 const HomeStatictics = ({ orders }) => {
-  const [months, setMonths] = useState([thisMonth]);
-  const [years, setYears] = useState([thisYear]);
+  const [month, setMonth] = useState(thisMonth);
+  const [year, setYear] = useState(thisYear);
 
   const {
     data: products,
@@ -41,8 +41,8 @@ const HomeStatictics = ({ orders }) => {
     return <PageConnectionWait title="Server Bağlantısı Kurulamadı" />;
 
   const filteredData = orders
-    .filter((item) => +item.date.split("-")[0] === years)
-    .filter((item) => +item.date.split("-")[1] === months);
+    .filter((item) => +item.date.split("-")[0] === year)
+    .filter((item) => +item.date.split("-")[1] === month);
 
   const { totalCakeCount, totalIncome, totalCost, totalProfit } =
     statisticsCalc(filteredData, 1, products);
@@ -87,17 +87,17 @@ const HomeStatictics = ({ orders }) => {
           variant="h6"
           color="text.secondary"
           component="div"
-        >{`${years}-${monthsTransform[months]} Ayı`}</Typography>
+        >{`${year}-${monthsTransform[month]} Ayı`}</Typography>
         <Stack alignItems={"center"} direction="row">
           <IconButton
             aria-label="delete"
             size="large"
             onClick={() => {
-              if (months === 1) {
-                setMonths(12);
-                setYears(years - 1);
+              if (month === 1) {
+                setMonth(12);
+                setYear(year - 1);
               } else {
-                setMonths(months - 1);
+                setMonth(month - 1);
               }
             }}
           >
@@ -107,11 +107,11 @@ const HomeStatictics = ({ orders }) => {
             aria-label="delete"
             size="large"
             onClick={() => {
-              if (months === 12) {
-                setMonths(1);
-                setYears(years + 1);
+              if (month === 12) {
+                setMonth(1);
+                setYear(year + 1);
               } else {
-                setMonths(months + 1);
+                setMonth(month + 1);
               }
             }}
           >
