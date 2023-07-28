@@ -159,7 +159,7 @@ const NavBar = () => {
               }}
               sx={{ p: 0 }}
             >
-              <Avatar alt="Mehmet Altan" src={profile}/>
+              <Avatar alt="Mehmet Altan" src={profile} />
             </IconButton>
 
             <Menu
@@ -182,15 +182,6 @@ const NavBar = () => {
             >
               <MenuItem
                 onClick={() => {
-                  localStorage.removeItem("token");
-                  navigate("/");
-                  window.location.reload();
-                }}
-              >
-                <Typography textAlign="center">Çıkış Yap</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
                   navigate("/parametreler");
                 }}
               >
@@ -202,6 +193,15 @@ const NavBar = () => {
                 }}
               >
                 <Typography textAlign="center">İstatistikler</Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                  window.location.reload();
+                }}
+              >
+                <Typography textAlign="center">Çıkış Yap</Typography>
               </MenuItem>
             </Menu>
           </Box>

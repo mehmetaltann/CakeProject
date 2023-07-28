@@ -7,7 +7,6 @@ import { dateFormat } from "../../utils/time-functions";
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "../../redux/slices/generalSlice";
-import { tableCellClasses } from "@mui/material/TableCell";
 import {
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
