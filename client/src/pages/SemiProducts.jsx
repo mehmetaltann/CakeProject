@@ -1,7 +1,7 @@
-import SpDataTable from "../components/semiproducts/SpDataTable";
-import PageFormContainer from "../components/UI/PageFormContainer";
-import SpForm from "../components/semiproducts/SpForm";
-import { useAddSemiProductMutation } from "../redux/apis/semiProductApi";
+import SpDataTable from "../features/semiproducts/SpDataTable";
+import SpForm from "../features/semiproducts/SpForm";
+import PageFormContainer from "../components/page/PageFormContainer";
+import { useAddSemiProductMutation } from "../store/api/semiProductApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
 import { useState } from "react";

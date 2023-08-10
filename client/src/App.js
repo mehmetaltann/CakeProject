@@ -1,9 +1,8 @@
 import { Rotalar } from "./Routes";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, Snackbar, Alert } from "@mui/material";
 import { GlobalTheme } from "./styles/GlobalTheme";
-import { Snackbar, Alert } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { setSnackbar } from "./redux/slices/generalSlice";
+import { setSnackbar } from "./store/slices/generalSlice";
 
 function App() {
   const { snackbar } = useSelector((state) => state.general);

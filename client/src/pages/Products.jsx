@@ -1,7 +1,7 @@
-import PDataTable from "../components/products/PDataTable";
-import PForm from "../components/products/PForm";
-import PageFormContainer from "../components/UI/PageFormContainer";
-import { useAddProductMutation } from "../redux/apis/productApi";
+import PDataTable from "../features/products/PDataTable";
+import PForm from "../features/products/PForm";
+import PageFormContainer from "../components/page/PageFormContainer";
+import { useAddProductMutation } from "../store/api/productApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
 import { useState } from "react";

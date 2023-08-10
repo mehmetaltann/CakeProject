@@ -1,10 +1,10 @@
-import OtherParameter from "../components/parameters/OtherParameter";
-import NewParameter from "../components/parameters/NewParameter";
-import PageConnectionWait from "../components/UI/PageConnectionWait";
+import OtherParameter from "../features/parameters/OtherParameter";
+import NewParameter from "../features/parameters/NewParameter";
+import PageConnectionWait from "../components/page/PageConnectionWait";
 import AddIcon from "@mui/icons-material/Add";
 import { PageWrapper } from "../layouts/Wrappers";
-import { useGetParametersQuery } from "../redux/apis/parameterApi";
-import { setParameterType } from "../redux/slices/generalSlice";
+import { useGetParametersQuery } from "../store/api/parameterApi";
+import { setParameterType } from "../store/slices/generalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Stack,

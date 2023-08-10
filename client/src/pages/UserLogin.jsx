@@ -1,7 +1,7 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch } from "react-redux";
-import { setSnackbar } from "../redux/slices/generalSlice";
-import { useAddAuthMutation } from "../redux/apis/userApi";
+import { setSnackbar } from "../store/slices/generalSlice";
+import { useAddAuthMutation } from "../store/api/userApi";
 import {
   Avatar,
   Button,

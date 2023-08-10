@@ -1,5 +1,5 @@
 import { PageWrapper } from "../layouts/Wrappers";
-import StatisticsMain from "../components/statistics/StatisticsMain";
+import StatisticsMain from "../features/statistics/StatisticsMain";
 
 const Statistics = () => {
   return (

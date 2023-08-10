@@ -1,9 +1,9 @@
-import HomeCalendar from "../components/homepage/HomeCalendar";
-import PageConnectionWait from "../components/UI/PageConnectionWait";
+import HomeCalendar from "../features/homepage/HomeCalendar";
+import HomeForm from "../features/homepage/HomeForm";
+import HomeStatictics from "../features/homepage/HomeStatictics";
+import PageConnectionWait from "../components/page/PageConnectionWait";
 import Grid from "@mui/material/Unstable_Grid2";
-import HomeForm from "../components/homepage/HomeForm";
-import HomeStatictics from "../components/homepage/HomeStatictics";
-import { useGetOrdersQuery } from "../redux/apis/orderApi";
+import { useGetOrdersQuery } from "../store/api/orderApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Box, Paper } from "@mui/material";
 

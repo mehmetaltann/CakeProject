@@ -1,8 +1,8 @@
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setSnackbar } from "../redux/slices/generalSlice";
-import { useAddUserMutation } from "../redux/apis/userApi";
+import { setSnackbar } from "../store/slices/generalSlice";
+import { useAddUserMutation } from "../store/api/userApi";
 import {
   Avatar,
   Button,

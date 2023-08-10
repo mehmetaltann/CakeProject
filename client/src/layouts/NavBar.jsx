@@ -3,7 +3,7 @@ import CakeIcon from "@mui/icons-material/Cake";
 import profile from "../assets/img/profile.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setSearchQuery } from "../redux/slices/generalSlice";
+import { setSearchQuery } from "../store/slices/generalSlice";
 import { useDispatch } from "react-redux";
 import {
   Menu,

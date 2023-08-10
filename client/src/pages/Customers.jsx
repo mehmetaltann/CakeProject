@@ -1,7 +1,7 @@
-import CDataTable from "../components/customers/CDataTable";
-import PageFormContainer from "../components/UI/PageFormContainer";
-import CForm from "../components/customers/CForm";
-import { useAddCustomerMutation } from "../redux/apis/customerApi";
+import CDataTable from "../features/customers/CDataTable";
+import CForm from "../features/customers/CForm";
+import PageFormContainer from "../components/pages/PageFormContainer";
+import { useAddCustomerMutation } from "../store/api/customerApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
 import { useState } from "react";

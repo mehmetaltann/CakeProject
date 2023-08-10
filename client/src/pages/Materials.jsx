@@ -1,11 +1,11 @@
-import MDataTable from "../components/materials/MDataTable";
-import MForm from "../components/materials/MForm";
-import PageFormContainer from "../components/UI/PageFormContainer";
+import MDataTable from "../features/materials/MDataTable";
+import MForm from "../features/materials/MForm";
+import PageFormContainer from "../components/page/PageFormContainer";
 import { DataTableWrapper } from "../layouts/Wrappers";
 import { Stack, Paper } from "@mui/material";
 import { materialDateInput } from "../utils/time-functions";
 import { PageWrapper } from "../layouts/Wrappers";
-import { useAddMaterialMutation } from "../redux/apis/materialApi";
+import { useAddMaterialMutation } from "../store/api/materialApi";
 import { useState } from "react";
 
 const Materials = () => {

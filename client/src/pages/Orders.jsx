@@ -1,8 +1,8 @@
-import PageFormContainer from "../components/UI/PageFormContainer";
-import OrForm from "../components/orders/OrForm";
-import OrDataTable from "../components/orders/OrDataTable";
+import PageFormContainer from "../components/page/PageFormContainer";
+import OrForm from "../features/orders/OrForm";
+import OrDataTable from "../features/orders/OrDataTable";
 import { materialDateInput } from "../utils/time-functions";
-import { useAddOrderMutation } from "../redux/apis/orderApi";
+import { useAddOrderMutation } from "../store/api/orderApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
 import { useState } from "react";
