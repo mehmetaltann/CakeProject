@@ -1,5 +1,5 @@
 import CTableRow from "./CTableRow";
-import PageConnectionWait from "../../components/pages/PageConnectionWait";
+import PageConnectionWait from "../../components/page/PageConnectionWait";
 import TablePaginationActions from "../../components/table/TablePaginationActions";
 import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";

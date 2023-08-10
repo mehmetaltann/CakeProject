@@ -1,6 +1,6 @@
 import CDataTable from "../features/customers/CDataTable";
 import CForm from "../features/customers/CForm";
-import PageFormContainer from "../components/pages/PageFormContainer";
+import PageFormContainer from "../components/page/PageFormContainer";
 import { useAddCustomerMutation } from "../store/api/customerApi";
 import { PageWrapper } from "../layouts/Wrappers";
 import { Stack } from "@mui/material";
