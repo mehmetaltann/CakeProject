@@ -1,6 +1,6 @@
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../../components/form/FormTextField";
-import FormSelect from "../../components/form/FormSelect";
+import FormTextField from "../../components/forms/FormTextField";
+import FormSelect from "../../components/forms/FormSelect";
 import PageConnectionWait from "../../components/page/PageConnectionWait"
 import * as Yup from "yup";
 import { Stack, Button, MenuItem } from "@mui/material";

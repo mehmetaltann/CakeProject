@@ -1,5 +1,5 @@
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../../components/form/FormTextField";
+import FormTextField from "../../components/forms/FormTextField";
 import * as Yup from "yup";
 import { Stack, Button } from "@mui/material";
 import { Form, Formik } from "formik";

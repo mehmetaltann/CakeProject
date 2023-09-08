@@ -1,7 +1,7 @@
 import SendIcon from "@mui/icons-material/Send";
-import FormSelect from "../../components/form/FormSelect";
-import FormTextField from "../../components/form/FormTextField";
-import FormDatePicker from "../../components/form/FormDatePicker";
+import FormSelect from "../../components/forms/FormSelect";
+import FormTextField from "../../components/forms/FormTextField";
+import FormDatePicker from "../../components/forms/FormDatePicker";
 import PageConnectionWait from "../../components/page/PageConnectionWait";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";

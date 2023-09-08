@@ -1,6 +1,6 @@
 import PageConnectionWait from "../page/PageConnectionWait";
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../form/FormTextField";
+import FormTextField from "../forms/FormTextField";
 import * as Yup from "yup";
 import { useGetMaterialsQuery } from "../../store/api/materialApi";
 import { setSnackbar } from "../../store/slices/generalSlice";

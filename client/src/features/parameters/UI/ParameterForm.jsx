@@ -1,5 +1,5 @@
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../../../components/form/FormTextField";
+import FormTextField from "../../../components/forms/FormTextField";
 import { useAddParameterContentMutation } from "../../../store/api/parameterApi";
 import { setSnackbar } from "../../../store/slices/generalSlice";
 import { useDispatch } from "react-redux";

@@ -1,6 +1,6 @@
 import PageConnectionWait from "../page/PageConnectionWait";
 import SendIcon from "@mui/icons-material/Send";
-import FormTextField from "../form/FormTextField";
+import FormTextField from "../forms/FormTextField";
 import * as Yup from "yup";
 import { Autocomplete } from "formik-mui";
 import { useGetSemiProductsQuery } from "../../store/api/semiProductApi";
